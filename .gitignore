@@ -1,0 +1,13 @@
+# Secrets — never commit (contains SMTP app password)
+.env
+
+# Dependencies
+node_modules/
+
+# Runtime data (leads, subscribers, bookings, email log) — contains PII
+/data/
+
+# Logs & OS cruft
+*.log
+.DS_Store
+npm-debug.log*
