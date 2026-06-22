@@ -99,85 +99,116 @@
     requestAnimationFrame(tick);
   }
 
-  /* ---------- interactive dashboard (data per reporting period) ---------- */
-  const spark = $(".spark");
-  const line = $(".spark-line");
-  const area = $(".spark-area");
-  const W = 320, H = 90, PAD = 6;
-
-  // Coherent, internally-consistent demo data: Today < Week < Month.
-  const dash = {
-    "Today":      { revenue: 12450,  tx: 538,   customers: 47,   total: 84230,   deltas: ["▲ 18%", "▲ 9%", "▲ 6%"],  curve: [40, 38, 52, 47, 60, 55, 72, 68, 80, 76, 88, 84] },
-    "This Week":  { revenue: 84230,  tx: 3612,  customers: 312,  total: 612400,  deltas: ["▲ 24%", "▲ 12%", "▲ 8%"], curve: [30, 45, 40, 58, 50, 65, 60, 74, 70, 62, 78, 90] },
-    "This Month": { revenue: 312900, tx: 14820, customers: 1284, total: 1265430, deltas: ["▲ 36%", "▲ 21%", "▲ 15%"], curve: [20, 35, 30, 48, 55, 45, 62, 58, 70, 82, 75, 88] },
-  };
-  const kpiMap = {
-    revenue: { el: $("#kpi-revenue"), prefix: "AED " },
-    tx:      { el: $("#kpi-tx"),      prefix: "" },
-    customers: { el: $("#kpi-customers"), prefix: "" },
-  };
-  const totalEl = $("#chart-total");
-  const deltaEls = [$("#delta-revenue"), $("#delta-tx"), $("#delta-customers")];
-
-  function buildPath(values) {
-    const max = Math.max(...values), min = Math.min(...values);
-    const span = max - min || 1;
-    const stepX = (W - PAD * 2) / (values.length - 1);
-    const pts = values.map((v, i) => [PAD + i * stepX, PAD + (1 - (v - min) / span) * (H - PAD * 2)]);
-    const d = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
-    const areaD = `${d} L${pts[pts.length - 1][0].toFixed(1)},${H} L${pts[0][0].toFixed(1)},${H} Z`;
-    return { d, areaD };
-  }
-
-  function redrawSpark(curve, restart) {
-    const { d, areaD } = buildPath(curve);
-    if (line) line.setAttribute("d", d);
-    if (area) area.setAttribute("d", areaD);
-    if (restart && spark && !prefersReduced) {
-      spark.classList.remove("drawn");
-      void spark.offsetWidth; // reflow to restart the draw animation
-      spark.classList.add("drawn");
-    }
-  }
-
-  function applyRange(range, animate) {
-    const data = dash[range] || dash["Today"];
-    // KPIs
-    Object.keys(kpiMap).forEach((k) => {
-      const { el, prefix } = kpiMap[k];
-      if (!el) return;
-      el.dataset.count = data[k];
-      el.dataset.prefix = prefix;
-      if (animate) animateCount(el); else el.textContent = prefix + data[k].toLocaleString();
+  /* ---------- interactive tech-stack orbital ---------- */
+  initOrbital();
+  function initOrbital() {
+    const root = $("#orbital");
+    if (!root) return;
+    const SVGNS = "http://www.w3.org/2000/svg";
+    const VIEW = 800, C = 400, R_INNER = 215, R_OUTER = 335;
+    const INNER = [
+      { n: "React", c: "#61DAFB" }, { n: "Next.js", c: "#cbd5e1" }, { n: "Node.js", c: "#83CD29" },
+      { n: "TypeScript", c: "#3178C6" }, { n: "PostgreSQL", c: "#5b8def" }, { n: "AWS", c: "#FF9900" },
+    ];
+    const OUTER = [
+      { n: "Stripe", c: "#635BFF" }, { n: "Docker", c: "#2496ED" }, { n: "Kubernetes", c: "#326CE5" },
+      { n: "GraphQL", c: "#E535AB" }, { n: "Flutter", c: "#54C5F8" }, { n: "Python", c: "#FFD43B" },
+      { n: "Redis", c: "#FF6B5E" }, { n: "Terraform", c: "#9C6BE8" },
+    ];
+    const ALL = [
+      ...INNER.map((d, i) => ({ ...d, ring: "inner", idx: i, total: INNER.length })),
+      ...OUTER.map((d, i) => ({ ...d, ring: "outer", idx: i, total: OUTER.length })),
+    ];
+    const pos = (node) => {
+      const r = node.ring === "inner" ? R_INNER : R_OUTER;
+      const offset = node.ring === "outer" ? Math.PI / OUTER.length : 0;
+      const a = (node.idx / node.total) * 2 * Math.PI - Math.PI / 2 + offset;
+      return { x: C + r * Math.cos(a), y: C + r * Math.sin(a) };
+    };
+    const curvePath = (x, y, i) => {
+      const dx = C - x, dy = C - y, mx = x + dx * 0.5, my = y + dy * 0.5;
+      const len = Math.hypot(-dy, dx) || 1, off = 26 * (i % 2 ? -1 : 1);
+      return `M ${x.toFixed(1)} ${y.toFixed(1)} Q ${(mx + (-dy / len) * off).toFixed(1)} ${(my + (dx / len) * off).toFixed(1)} ${C} ${C}`;
+    };
+    const rotor = document.createElement("div");
+    rotor.className = "orbital-rotor";
+    const svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${VIEW} ${VIEW}`);
+    const ringCircle = (r) => {
+      const c = document.createElementNS(SVGNS, "circle");
+      c.setAttribute("cx", C); c.setAttribute("cy", C); c.setAttribute("r", r); c.setAttribute("class", "orbital-ring");
+      return c;
+    };
+    svg.append(ringCircle(R_INNER), ringCircle(R_OUTER));
+    const flows = [];
+    ALL.forEach((node, i) => {
+      const p = pos(node);
+      const path = document.createElementNS(SVGNS, "path");
+      path.setAttribute("d", curvePath(p.x, p.y, i));
+      path.setAttribute("class", "orbital-flow");
+      path.id = `orb-flow-${i}`;
+      svg.appendChild(path);
+      flows[i] = path;
+      if (!prefersReduced) {
+        const dur = (6 + ((i * 0.7) % 3)).toFixed(2), begin = `${((i * 0.5) % 5).toFixed(2)}s`;
+        const dot = document.createElementNS(SVGNS, "circle");
+        dot.setAttribute("r", "2.6"); dot.setAttribute("fill", "#8AAAD9");
+        const am = document.createElementNS(SVGNS, "animateMotion");
+        am.setAttribute("dur", `${dur}s`); am.setAttribute("repeatCount", "indefinite"); am.setAttribute("begin", begin);
+        const mp = document.createElementNS(SVGNS, "mpath");
+        mp.setAttribute("href", `#orb-flow-${i}`);
+        mp.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#orb-flow-${i}`);
+        am.appendChild(mp); dot.appendChild(am);
+        const op = document.createElementNS(SVGNS, "animate");
+        op.setAttribute("attributeName", "opacity"); op.setAttribute("values", "0;1;1;0"); op.setAttribute("keyTimes", "0;0.1;0.9;1");
+        op.setAttribute("dur", `${dur}s`); op.setAttribute("repeatCount", "indefinite"); op.setAttribute("begin", begin);
+        dot.appendChild(op);
+        svg.appendChild(dot);
+      }
     });
-    // total
-    if (totalEl) {
-      totalEl.dataset.count = data.total;
-      if (animate) animateCount(totalEl); else totalEl.textContent = "AED " + data.total.toLocaleString();
-    }
-    // deltas
-    deltaEls.forEach((d, i) => { if (d) d.textContent = data.deltas[i]; });
-    // chart
-    redrawSpark(data.curve, animate);
+    rotor.appendChild(svg);
+    ALL.forEach((node, i) => {
+      const p = pos(node);
+      const wrap = document.createElement("div");
+      wrap.className = "orbital-node";
+      wrap.style.left = `${((p.x / VIEW) * 100).toFixed(2)}%`;
+      wrap.style.top = `${((p.y / VIEW) * 100).toFixed(2)}%`;
+      const inner = document.createElement("div");
+      inner.className = "orbital-node-inner";
+      const pill = document.createElement("div");
+      pill.className = "orbital-pill";
+      const dot = document.createElement("span");
+      dot.className = "orbital-dot";
+      dot.style.background = node.c; dot.style.color = node.c;
+      pill.append(dot, document.createTextNode(node.n));
+      inner.appendChild(pill); wrap.appendChild(inner); rotor.appendChild(wrap);
+      const hot = (on) => {
+        wrap.classList.toggle("is-hot", on);
+        flows[i].classList.toggle("is-hot", on);
+        if (on) flows[i].setAttribute("stroke", node.c); else flows[i].removeAttribute("stroke");
+      };
+      wrap.addEventListener("mouseenter", () => hot(true));
+      wrap.addEventListener("mouseleave", () => hot(false));
+    });
+    const core = document.createElement("div");
+    core.className = "orbital-core";
+    core.innerHTML = "<span>glintvex</span>";
+    root.append(rotor, core);
   }
 
-  // initialise (no animation yet; count-up fires when scrolled into view)
-  applyRange("Today", false);
-
-  // tab switching
-  $$(".dash-tab").forEach((tab) => {
-    tab.addEventListener("click", () => {
-      $$(".dash-tab").forEach((t) => {
-        t.classList.remove("is-active");
-        t.setAttribute("aria-pressed", "false");
-      });
-      tab.classList.add("is-active");
-      tab.setAttribute("aria-pressed", "true");
-      applyRange(tab.dataset.range, true);
+  /* ---------- work carousel arrow ---------- */
+  const workArrow = $("#work-arrow");
+  const workGrid = $(".work-grid");
+  if (workArrow && workGrid) {
+    workArrow.addEventListener("click", () => {
+      const card = workGrid.querySelector(".work-card");
+      const step = card ? card.getBoundingClientRect().width + 20 : workGrid.clientWidth * 0.8;
+      const atEnd = workGrid.scrollLeft + workGrid.clientWidth >= workGrid.scrollWidth - 8;
+      workGrid.scrollBy({ left: atEnd ? -workGrid.scrollWidth : step, behavior: prefersReduced ? "auto" : "smooth" });
     });
-  });
+  }
 
-  /* ---------- count-up + chart draw when scrolled into view ---------- */
+  /* ---------- count-up when scrolled into view ---------- */
   const countEls = $$("[data-count]");
   if ("IntersectionObserver" in window) {
     const cio = new IntersectionObserver((entries) => {
@@ -186,18 +217,8 @@
       });
     }, { threshold: 0.5 });
     countEls.forEach((el) => cio.observe(el));
-
-    if (spark) {
-      const sio = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) { spark.classList.add("drawn"); sio.unobserve(e.target); }
-        });
-      }, { threshold: 0.4 });
-      sio.observe(spark);
-    }
   } else {
     countEls.forEach(animateCount);
-    spark?.classList.add("drawn");
   }
 
   /* ---------- live clock + jittered ping ---------- */
