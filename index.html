@@ -352,45 +352,12 @@
             <h3>Book a demo</h3>
             <p class="funnel-lede">Pick a slot and we'll walk you through how we'd build it. 30 minutes, no slides.</p>
 
-            <div class="booking" id="booking" aria-live="polite">
-              <!-- calendar -->
-              <div class="cal" id="cal-step">
-                <div class="cal-head">
-                  <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">‹</button>
-                  <span class="cal-title" id="cal-title" aria-live="polite">Month</span>
-                  <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">›</button>
-                </div>
-                <div class="cal-weekdays" aria-hidden="true">
-                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                </div>
-                <div class="cal-grid" id="cal-grid" role="group" aria-label="Choose a date"></div>
-                <p class="cal-note">Weekdays only · times shown in Gulf Standard Time (GST)</p>
-              </div>
-
-              <!-- time slots + details (revealed after date pick) -->
-              <div class="slots" id="slots-step" hidden>
-                <button type="button" class="back-link" id="slots-back">‹ Back to calendar</button>
-                <p class="slots-date" id="slots-date">Selected date</p>
-                <div class="slots-grid" id="slots-grid" role="group" aria-label="Available times"></div>
-                <form class="book-form" id="book-form" novalidate hidden>
-                  <div class="book-fields">
-                    <input type="text" name="name" placeholder="Full name" aria-label="Full name" required />
-                    <input type="email" name="email" placeholder="you@company.com" aria-label="Email" required />
-                  </div>
-                  <input type="text" name="notes" placeholder="Anything we should know? (optional)" aria-label="Notes" />
-                  <button type="submit" class="btn btn-primary btn-lg" id="book-submit">Confirm booking</button>
-                </form>
-                <p class="cta-hint" id="book-hint" role="status" aria-live="polite"></p>
-              </div>
-
-              <!-- confirmation -->
-              <div class="booked" id="booked-step" hidden>
-                <div class="booked-check" aria-hidden="true">✓</div>
-                <h4>You're booked in</h4>
-                <p class="booked-detail" id="booked-detail"></p>
-                <p class="booked-ref">Confirmation: <strong id="booked-ref"></strong></p>
-                <button type="button" class="btn btn-ghost" id="book-again">Book another time</button>
-              </div>
+            <div class="booking" id="booking">
+              <!-- Calendly inline scheduling widget — handles slot availability,
+                   double-booking, confirmation emails, and calendar invites. -->
+              <div class="calendly-inline-widget" data-url="https://calendly.com/notbawany1/30min"
+                   style="min-width:320px;height:700px;"></div>
+              <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
             </div>
           </div>
         </div>
