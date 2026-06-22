@@ -192,7 +192,7 @@
     });
     const core = document.createElement("div");
     core.className = "orbital-core";
-    core.innerHTML = "<span>glintvex</span>";
+    core.innerHTML = "<span>Glintvex</span>";
     root.append(rotor, core);
   }
 
