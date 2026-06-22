@@ -283,7 +283,6 @@
       }
     });
   }
-  wireForm("#contact-form", 'input[name="email"]', "#form-hint", "/api/lead", "Thanks, we'll be in touch within one business day.");
   wireForm("#subscribe-form", 'input[name="email"]', "#sub-hint", "/api/subscribe", "Subscribed. Welcome aboard.");
 
   /* ---------- smooth-scroll offset for sticky header ---------- */

@@ -342,7 +342,7 @@ a { color: inherit; text-decoration: none; }
 .cta-title { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; letter-spacing: -0.02em; color: var(--white); line-height: 1.08; }
 .cta-sub { margin-top: 18px; color: var(--text-dim); font-size: 1.08rem; }
 
-.funnel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+.funnel { display: grid; grid-template-columns: minmax(0, 640px); justify-content: center; gap: 20px; align-items: stretch; }
 .funnel-card { border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px, 3vw, 36px); background: var(--surface-soft); display: flex; flex-direction: column; }
 .funnel-step { font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--horizon-1); font-weight: 500; }
 .funnel-card h3 { margin-top: 12px; font-size: 1.5rem; color: var(--white); font-weight: 700; }
