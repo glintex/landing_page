@@ -152,7 +152,7 @@
       if (!prefersReduced) {
         const dur = (6 + ((i * 0.7) % 3)).toFixed(2), begin = `${((i * 0.5) % 5).toFixed(2)}s`;
         const dot = document.createElementNS(SVGNS, "circle");
-        dot.setAttribute("r", "2.6"); dot.setAttribute("fill", "#8AAAD9");
+        dot.setAttribute("r", "3"); dot.setAttribute("fill", "#5eead4");
         const am = document.createElementNS(SVGNS, "animateMotion");
         am.setAttribute("dur", `${dur}s`); am.setAttribute("repeatCount", "indefinite"); am.setAttribute("begin", begin);
         const mp = document.createElementNS(SVGNS, "mpath");
