@@ -307,7 +307,11 @@ a { color: inherit; text-decoration: none; }
 .process-tag { font-size: 0.74rem; color: var(--text-faint); border: 1px solid var(--line); border-radius: 100px; padding: 5px 13px; white-space: nowrap; }
 
 /* ---- work ---- */
-.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.work-grid { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: rgba(62,136,255,0.5) transparent; }
+.work-grid::-webkit-scrollbar { height: 8px; }
+.work-grid::-webkit-scrollbar-thumb { background: rgba(62,136,255,0.45); border-radius: 100px; }
+.work-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 100px; }
+.work-grid > .work-card { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; }
 .work-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; background: rgba(255,255,255,0.012); transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease); cursor: default; overflow: hidden; display: flex; flex-direction: column; }
 .work-card:hover, .work-card:focus-visible { transform: translateY(-6px); border-color: rgba(62,136,255,0.4); background: var(--surface-soft); }
 .work-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
@@ -448,7 +452,7 @@ a { color: inherit; text-decoration: none; }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-panel { order: 2; }
   .cap-grid { grid-template-columns: repeat(2, 1fr); }
-  .work-grid { grid-template-columns: 1fr 1fr; }
+  .work-grid > .work-card { flex-basis: calc((100% - 20px) / 2); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .team-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
@@ -461,7 +465,8 @@ a { color: inherit; text-decoration: none; }
   .header-actions .btn-primary { display: none; }
   .brand-lockup { display: none; }
   .brand-mark { display: block; }
-  .work-grid, .team-grid, .cap-grid, .stats-grid, .footer-top { grid-template-columns: 1fr; }
+  .team-grid, .cap-grid, .stats-grid, .footer-top { grid-template-columns: 1fr; }
+  .work-grid > .work-card { flex-basis: 84%; }
   .team-portrait { height: 180px; }
   .book-fields { grid-template-columns: 1fr; }
   .slots-grid { grid-template-columns: repeat(2, 1fr); }
