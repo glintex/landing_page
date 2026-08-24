@@ -35,6 +35,7 @@ const HOST = process.env.HOST || "127.0.0.1";
 // Bookable configuration
 const ALLOWED_SLOTS = ["10:00", "11:00", "12:00", "14:00", "15:00", "16:00"]; // GST
 const TIMEZONE_LABEL = "GST";
+const CONTACT_INBOX = "info@glintvex.com";
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -50,6 +51,14 @@ const MIME = {
   ".woff2": "font/woff2",
   ".pdf": "application/pdf",
 };
+
+class CustomException extends Error {
+  constructor(message, status = 400) {
+    super(message);
+    this.name = "CustomException";
+    this.status = status;
+  }
+}
 
 /* ----------------------------- data store ----------------------------- */
 // Serialize all writes through a single promise chain to avoid lost updates.
@@ -109,18 +118,19 @@ function emailConfigured() { return !!(process.env.SMTP_URL || process.env.SMTP_
 
 // opts: { to, ics }  — ics, when present, is attached as a calendar invite.
 async function notify(subject, body, opts = {}) {
-  const recipient = opts.to || process.env.MAIL_TO || "hello@glintvex.com";
+  const recipient = opts.to || process.env.MAIL_TO || CONTACT_INBOX;
   if (emailConfigured()) {
     try {
       // Lazy require so the server still boots if the dependency is missing.
       const nodemailer = require("nodemailer");
       const transport = buildTransport(nodemailer);
       const mail = {
-        from: process.env.MAIL_FROM || "no-reply@glintvex.com",
+        from: process.env.MAIL_FROM || CONTACT_INBOX,
         to: recipient,
         subject,
         text: body,
       };
+      if (opts.replyTo) mail.replyTo = opts.replyTo;
       if (opts.ics) {
         // invite:true -> set icalEvent so it renders as a calendar card (auto-adds for the booker).
         // invite:false -> attach the .ics as a regular file so the email stays a normal, readable message.
@@ -149,7 +159,7 @@ function buildIcs({ ref, name, email, date, time }) {
   const fmt = (d) => `${d.getUTCFullYear()}${p(d.getUTCMonth() + 1)}${p(d.getUTCDate())}T${p(d.getUTCHours())}${p(d.getUTCMinutes())}00Z`;
   // Organizer = the Glintvex inbox, so the event lands on the studio's own calendar;
   // the client is invited as an attendee, so it lands on theirs too.
-  const organizer = process.env.MAIL_TO || process.env.MAIL_FROM || "hello@glintvex.com";
+  const organizer = process.env.MAIL_TO || process.env.MAIL_FROM || CONTACT_INBOX;
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -239,7 +249,7 @@ function readBody(req) {
 async function handleSubscribe(req, res) {
   const body = await readBody(req);
   const email = clean(body.email, 120);
-  if (!isEmail(email)) return sendJSON(res, 400, { ok: false, error: "Please provide a valid email." });
+  if (!isEmail(email)) throw new CustomException("Please provide a valid email.");
   await appendJSON("subscribers.json", { email, at: new Date().toISOString(), ip: req.socket.remoteAddress });
   await notify("New whitepaper subscriber", `Email: ${email}`);
   return sendJSON(res, 200, { ok: true, message: "Subscribed. Welcome aboard." });
@@ -247,11 +257,18 @@ async function handleSubscribe(req, res) {
 
 async function handleLead(req, res) {
   const body = await readBody(req);
+  const name = clean(body.name, 120);
   const email = clean(body.email, 120);
   const message = clean(body.message, 2000);
-  if (!isEmail(email)) return sendJSON(res, 400, { ok: false, error: "Please provide a valid email." });
-  await appendJSON("leads.json", { email, message, at: new Date().toISOString(), ip: req.socket.remoteAddress });
-  await notify("New project enquiry", `Email: ${email}\nMessage: ${message || "(none)"}`);
+  if (!name) throw new CustomException("Please enter your name.");
+  if (!isEmail(email)) throw new CustomException("Please provide a valid email.");
+  if (!message) throw new CustomException("Please tell us a little about your project.");
+  await appendJSON("leads.json", { name, email, message, at: new Date().toISOString(), ip: req.socket.remoteAddress });
+  await notify(
+    `New contact from ${name}`,
+    `New website enquiry.\n\nName: ${name}\nEmail: ${email}\nMessage:\n${message}`,
+    { to: process.env.MAIL_TO || CONTACT_INBOX, replyTo: email }
+  );
   return sendJSON(res, 200, { ok: true, message: "Thanks, we'll be in touch within one business day." });
 }
 
@@ -353,6 +370,9 @@ const server = http.createServer(async (req, res) => {
     }
     return await serveStatic(req, res, pathname);
   } catch (err) {
+    if (err instanceof CustomException) {
+      return sendJSON(res, err.status, { ok: false, error: err.message });
+    }
     const msg = err && err.message === "invalid JSON" ? "Invalid request body." : "Something went wrong.";
     return sendJSON(res, err.message === "invalid JSON" ? 400 : 500, { ok: false, error: msg });
   }
@@ -365,10 +385,10 @@ if (require.main === module) {
       console.log(`Glintvex server running at http://${HOST}:${PORT}`);
       console.log(`Static root: ${ROOT}`);
       console.log(`Data dir:    ${DATA_DIR}`);
-      console.log(`Notifications inbox (MAIL_TO): ${process.env.MAIL_TO || "hello@glintvex.com (default)"}`);
+      console.log(`Notifications inbox (MAIL_TO): ${process.env.MAIL_TO || CONTACT_INBOX + " (default)"}`);
       console.log(emailConfigured() ? "Email: SMTP configured, sending live (with .ics invites)" : "Email: SMTP not set, notifications logged to data/outbox.log");
     });
   });
 }
 
-module.exports = { buildIcs, isValidFutureWeekday, clean, isEmail, gstTodayISO, buildTransport, emailConfigured };
+module.exports = { buildIcs, isValidFutureWeekday, clean, isEmail, gstTodayISO, buildTransport, emailConfigured, CustomException };

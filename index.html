@@ -42,7 +42,7 @@
       </nav>
 
       <div class="header-actions">
-        <a href="#contact" class="btn btn-primary">Book a demo</a>
+        <a href="#contact" class="btn btn-primary">Get in touch</a>
         <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
           <span></span><span></span>
         </button>
@@ -53,7 +53,7 @@
       <a href="#work"><span class="nav-idx">02</span> Work</a>
       <a href="#team"><span class="nav-idx">03</span> Team</a>
       <a href="#pricing"><span class="nav-idx">04</span> Pricing</a>
-      <a href="#contact" class="btn btn-primary">Book a demo</a>
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
     </nav>
   </header>
 
@@ -72,7 +72,7 @@
             payment rails to the dashboards your customers live in.
           </p>
           <div class="hero-cta">
-            <a href="#contact" class="btn btn-primary btn-lg">Book a free consultation</a>
+            <a href="#contact" class="btn btn-primary btn-lg">Get in touch</a>
             <a href="#work" class="btn btn-ghost btn-lg">See our work →</a>
           </div>
         </div>
@@ -147,7 +147,7 @@
               <li><strong data-count="3" data-prefix="&lt;">0</strong><span>Weeks to first release</span></li>
             </ul>
           </div>
-          <a href="#contact" class="btn btn-primary work-head-cta">Book a demo</a>
+          <a href="#contact" class="btn btn-primary work-head-cta">Get in touch</a>
         </div>
 
         <div class="work-rail">
@@ -283,7 +283,7 @@
               <li>30 days post-launch support</li>
             </ul>
             <p class="price-ideal"><span>Ideal for</span> SaaS or FinTech with a validated product needing specific backend improvements.</p>
-            <a href="#contact" class="btn btn-ghost btn-lg price-cta">Book a demo</a>
+            <a href="#contact" class="btn btn-ghost btn-lg price-cta">Get in touch</a>
           </article>
 
           <article class="price-card price-card--popular reveal" data-delay="100">
@@ -304,7 +304,7 @@
               <li>90 days premium support</li>
             </ul>
             <p class="price-ideal"><span>Ideal for</span> growing FinTech / SaaS hitting performance bottlenecks.</p>
-            <a href="#contact" class="btn btn-primary btn-lg price-cta">Book a demo</a>
+            <a href="#contact" class="btn btn-primary btn-lg price-cta">Get in touch</a>
           </article>
 
           <article class="price-card reveal" data-delay="200">
@@ -325,7 +325,7 @@
               <li>6 months dedicated support</li>
             </ul>
             <p class="price-ideal"><span>Ideal for</span> Series B companies with complex multi-platform needs.</p>
-            <a href="#contact" class="btn btn-ghost btn-lg price-cta">Book a demo</a>
+            <a href="#contact" class="btn btn-ghost btn-lg price-cta">Get in touch</a>
           </article>
         </div>
       </div>
@@ -339,18 +339,28 @@
         </div>
 
         <div class="funnel reveal">
-          <!-- book a demo (calendar) -->
-          <div class="funnel-card funnel-book">
-            <h3>Book a demo</h3>
-            <p class="funnel-lede">Pick a slot and we'll walk you through how we'd build it. 30 minutes, no slides.</p>
+          <div class="funnel-card">
+            <h3>Get in touch</h3>
+            <p class="funnel-lede">Tell us a little about what you're building. We'll reply within one business day, or email us at <a href="mailto:info@glintvex.com">info@glintvex.com</a>.</p>
 
-            <div class="booking" id="booking">
-              <!-- Calendly inline scheduling widget — handles slot availability,
-                   double-booking, confirmation emails, and calendar invites. -->
-              <div class="calendly-inline-widget" data-url="https://calendly.com/notbawany1/30min"
-                   style="min-width:320px;height:700px;"></div>
-              <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-            </div>
+            <form class="cta-form" id="contact-form" novalidate>
+              <div class="cta-row">
+                <div class="cta-field">
+                  <label for="contact-name">Name</label>
+                  <input id="contact-name" type="text" name="name" placeholder="Your name" autocomplete="name" required />
+                </div>
+                <div class="cta-field">
+                  <label for="contact-email">Email</label>
+                  <input id="contact-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
+                </div>
+              </div>
+              <div class="cta-field">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" rows="5" placeholder="What can we help you build?" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send message</button>
+            </form>
+            <span class="cta-hint" id="contact-hint" role="status" aria-live="polite"></span>
           </div>
         </div>
       </div>

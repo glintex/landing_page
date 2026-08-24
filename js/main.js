@@ -306,6 +306,55 @@
   }
   wireForm("#subscribe-form", 'input[name="email"]', "#sub-hint", "/api/subscribe", "Subscribed. Welcome aboard.");
 
+  const contactForm = $("#contact-form");
+  if (contactForm) {
+    const hint = $("#contact-hint");
+    const nameInput = $('input[name="name"]', contactForm);
+    const emailInput = $('input[name="email"]', contactForm);
+    const messageInput = $('textarea[name="message"]', contactForm);
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = (nameInput.value || "").trim();
+      const email = (emailInput.value || "").trim();
+      const message = (messageInput.value || "").trim();
+      [nameInput, emailInput, messageInput].forEach((el) => el.removeAttribute("aria-invalid"));
+      if (!name) {
+        setHint(hint, "Please enter your name.", true);
+        nameInput.setAttribute("aria-invalid", "true");
+        nameInput.focus();
+        return;
+      }
+      if (!isEmail(email)) {
+        setHint(hint, "Please enter a valid email address.", true);
+        emailInput.setAttribute("aria-invalid", "true");
+        emailInput.focus();
+        return;
+      }
+      if (!message) {
+        setHint(hint, "Please tell us a little about your project.", true);
+        messageInput.setAttribute("aria-invalid", "true");
+        messageInput.focus();
+        return;
+      }
+      const btn = $("button[type=submit]", contactForm);
+      if (btn) btn.disabled = true;
+      setHint(hint, "Sending…", false);
+      try {
+        const { ok, data } = await postJSON("/api/lead", { name, email, message });
+        if (ok) {
+          setHint(hint, data.message || "Thanks, we'll be in touch within one business day.", false);
+          contactForm.reset();
+        } else {
+          setHint(hint, data.error || "Something went wrong. Please try again.", true);
+        }
+      } catch {
+        setHint(hint, "Could not send just now. Please email info@glintvex.com.", true);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    });
+  }
+
   /* ---------- smooth-scroll offset for sticky header ---------- */
   $$('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
