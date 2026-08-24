@@ -339,7 +339,8 @@ a { color: inherit; text-decoration: none; }
 .funnel-lede a { color: var(--horizon-1); text-decoration: underline; text-underline-offset: 2px; }
 .funnel-lede a:hover { color: var(--white); }
 
-.cta-form { margin-top: 22px; display: flex; flex-direction: column; gap: 14px; }
+.cta-honey { position: absolute; left: -9999px; height: 0; width: 0; opacity: 0; pointer-events: none; }
+.cta-form { margin-top: 22px; display: flex; flex-direction: column; gap: 14px; position: relative; }
 .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .cta-field { display: flex; flex-direction: column; gap: 6px; }
 .cta-form label { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--text-dim); }

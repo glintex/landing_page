@@ -267,6 +267,48 @@
     hint.style.color = isError ? "#ff8c8c" : "";
   }
 
+  const CONTACT_MAIL = "info@glintvex.com";
+
+  // Live site is a static host (GitHub Pages) — it cannot accept POST /api/*.
+  // Send mail through FormSubmit so it arrives at info@glintvex.com.
+  // On localhost, prefer the local Node API when it is running.
+  async function deliverContact({ name, email, message }) {
+    const localHost = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
+    if (localHost) {
+      try {
+        const local = await postJSON("/api/lead", { name, email, message });
+        if (local.ok) return { ok: true, message: local.data.message };
+      } catch {/* fall through to FormSubmit */}
+    }
+
+    const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONTACT_MAIL), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        _subject: "New contact from glintvex.com — " + name,
+        _replyto: email,
+        _template: "table",
+        _captcha: "false",
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    const success = data.success === true || data.success === "true";
+    if (success) {
+      return { ok: true, message: "Thanks, we'll be in touch within one business day." };
+    }
+    const needsConfirm = /confirm|activat/i.test(String(data.message || ""));
+    if (needsConfirm) {
+      return {
+        ok: true,
+        message: "Almost there — check info@glintvex.com for a confirmation link, click it once, then send again.",
+      };
+    }
+    return { ok: false, error: data.message || "Something went wrong. Please try again." };
+  }
+
   // Email-capture forms (lead + subscribe) wired to the backend, with graceful fallback.
   function wireForm(formSel, inputSel, hintSel, endpoint, fallbackMsg) {
     const form = $(formSel);
@@ -336,16 +378,22 @@
         messageInput.focus();
         return;
       }
+      const honey = ($('input[name="_honey"]', contactForm)?.value || "").trim();
+      if (honey) {
+        setHint(hint, "Thanks, we'll be in touch within one business day.", false);
+        contactForm.reset();
+        return;
+      }
       const btn = $("button[type=submit]", contactForm);
       if (btn) btn.disabled = true;
       setHint(hint, "Sending…", false);
       try {
-        const { ok, data } = await postJSON("/api/lead", { name, email, message });
-        if (ok) {
-          setHint(hint, data.message || "Thanks, we'll be in touch within one business day.", false);
+        const result = await deliverContact({ name, email, message });
+        if (result.ok) {
+          setHint(hint, result.message || "Thanks, we'll be in touch within one business day.", false);
           contactForm.reset();
         } else {
-          setHint(hint, data.error || "Something went wrong. Please try again.", true);
+          setHint(hint, result.error || "Something went wrong. Please try again.", true);
         }
       } catch {
         setHint(hint, "Could not send just now. Please email info@glintvex.com.", true);
