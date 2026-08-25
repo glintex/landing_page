@@ -269,46 +269,6 @@
 
   const CONTACT_MAIL = "info@glintvex.com";
 
-  // Live site is a static host (GitHub Pages) — it cannot accept POST /api/*.
-  // Send mail through FormSubmit so it arrives at info@glintvex.com.
-  // On localhost, prefer the local Node API when it is running.
-  async function deliverContact({ name, email, message }) {
-    const localHost = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
-    if (localHost) {
-      try {
-        const local = await postJSON("/api/lead", { name, email, message });
-        if (local.ok) return { ok: true, message: local.data.message };
-      } catch {/* fall through to FormSubmit */}
-    }
-
-    const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONTACT_MAIL), {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        message,
-        _subject: "New contact from glintvex.com — " + name,
-        _replyto: email,
-        _template: "table",
-        _captcha: "false",
-      }),
-    });
-    const data = await res.json().catch(() => ({}));
-    const success = data.success === true || data.success === "true";
-    if (success) {
-      return { ok: true, message: "Thanks, we'll be in touch within one business day." };
-    }
-    const needsConfirm = /confirm|activat/i.test(String(data.message || ""));
-    if (needsConfirm) {
-      return {
-        ok: true,
-        message: "Almost there — check info@glintvex.com for a confirmation link, click it once, then send again.",
-      };
-    }
-    return { ok: false, error: data.message || "Something went wrong. Please try again." };
-  }
-
   // Email-capture forms (lead + subscribe) wired to the backend, with graceful fallback.
   function wireForm(formSel, inputSel, hintSel, endpoint, fallbackMsg) {
     const form = $(formSel);
@@ -354,25 +314,38 @@
     const nameInput = $('input[name="name"]', contactForm);
     const emailInput = $('input[name="email"]', contactForm);
     const messageInput = $('textarea[name="message"]', contactForm);
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    const subjectInput = $('input[name="_subject"]', contactForm);
+
+    if (new URLSearchParams(window.location.search).get("sent") === "1") {
+      setHint(hint, "Thanks, we'll be in touch within one business day.", false);
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("sent");
+        window.history.replaceState({}, "", url.pathname + url.search + "#contact");
+      } catch {/* ignore */}
+    }
+
+    contactForm.addEventListener("submit", (e) => {
       const name = (nameInput.value || "").trim();
       const email = (emailInput.value || "").trim();
       const message = (messageInput.value || "").trim();
       [nameInput, emailInput, messageInput].forEach((el) => el.removeAttribute("aria-invalid"));
       if (!name) {
+        e.preventDefault();
         setHint(hint, "Please enter your name.", true);
         nameInput.setAttribute("aria-invalid", "true");
         nameInput.focus();
         return;
       }
       if (!isEmail(email)) {
+        e.preventDefault();
         setHint(hint, "Please enter a valid email address.", true);
         emailInput.setAttribute("aria-invalid", "true");
         emailInput.focus();
         return;
       }
       if (!message) {
+        e.preventDefault();
         setHint(hint, "Please tell us a little about your project.", true);
         messageInput.setAttribute("aria-invalid", "true");
         messageInput.focus();
@@ -380,26 +353,14 @@
       }
       const honey = ($('input[name="_honey"]', contactForm)?.value || "").trim();
       if (honey) {
+        e.preventDefault();
         setHint(hint, "Thanks, we'll be in touch within one business day.", false);
         contactForm.reset();
         return;
       }
-      const btn = $("button[type=submit]", contactForm);
-      if (btn) btn.disabled = true;
+      if (subjectInput) subjectInput.value = "New contact from glintvex.com — " + name;
+      contactForm.action = "https://formsubmit.co/" + encodeURIComponent(CONTACT_MAIL);
       setHint(hint, "Sending…", false);
-      try {
-        const result = await deliverContact({ name, email, message });
-        if (result.ok) {
-          setHint(hint, result.message || "Thanks, we'll be in touch within one business day.", false);
-          contactForm.reset();
-        } else {
-          setHint(hint, result.error || "Something went wrong. Please try again.", true);
-        }
-      } catch {
-        setHint(hint, "Could not send just now. Please email info@glintvex.com.", true);
-      } finally {
-        if (btn) btn.disabled = false;
-      }
     });
   }
 

@@ -343,8 +343,12 @@
             <h3>Get in touch</h3>
             <p class="funnel-lede">Tell us a little about what you're building. We'll reply within one business day, or email us at <a href="mailto:info@glintvex.com">info@glintvex.com</a>.</p>
 
-            <form class="cta-form" id="contact-form" novalidate>
+            <form class="cta-form" id="contact-form" action="https://formsubmit.co/info@glintvex.com" method="POST" accept-charset="UTF-8" novalidate>
               <input type="text" name="_honey" class="cta-honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <input type="hidden" name="_next" value="https://glintvex.com/?sent=1#contact" />
+              <input type="hidden" name="_subject" value="New contact from glintvex.com" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
               <div class="cta-row">
                 <div class="cta-field">
                   <label for="contact-name">Name</label>
@@ -362,6 +366,7 @@
               <button type="submit" class="btn btn-primary">Send message</button>
             </form>
             <span class="cta-hint" id="contact-hint" role="status" aria-live="polite"></span>
+            <p class="funnel-note">The first send may ask you to confirm. Check <strong>info@glintvex.com</strong> and the spam folder for an email, then click the link once.</p>
           </div>
         </div>
       </div>
@@ -408,6 +413,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=contact-mail" defer></script>
+  <script src="js/main.js?v=contact-mail2" defer></script>
 </body>
 </html>

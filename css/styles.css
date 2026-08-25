@@ -338,6 +338,7 @@ a { color: inherit; text-decoration: none; }
 .funnel-lede { margin-top: 10px; color: var(--text-dim); font-size: 0.96rem; }
 .funnel-lede a { color: var(--horizon-1); text-decoration: underline; text-underline-offset: 2px; }
 .funnel-lede a:hover { color: var(--white); }
+.funnel-note { margin-top: 12px; font-size: 0.82rem; color: var(--text-faint); }
 
 .cta-honey { position: absolute; left: -9999px; height: 0; width: 0; opacity: 0; pointer-events: none; }
 .cta-form { margin-top: 22px; display: flex; flex-direction: column; gap: 14px; position: relative; }
