@@ -1,412 +1,452 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glintvex · We build SaaS &amp; FinTech systems that scale</title>
-  <meta name="description" content="Glintvex is an engineering studio that designs, builds and scales custom SaaS and FinTech products, from cloud architecture to production-grade financial systems." />
-  <meta name="theme-color" content="#071514" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Glintvex · SaaS & FinTech systems that scale" />
-  <meta property="og:description" content="An engineering studio building custom SaaS and FinTech products that scale." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glintvex · SaaS &amp; FinTech engineering partner</title>
+  <meta name="description" content="Glintvex is a senior engineering team for SaaS and FinTech companies. We design, build and scale the platforms your revenue runs on: payments, dashboards, APIs and cloud." />
+  <meta property="og:title" content="Glintvex · SaaS & FinTech engineering partner" />
+  <meta property="og:description" content="Senior engineers who design, build and scale SaaS and FinTech platforms. Kickoff in 14 days." />
   <meta property="og:type" content="website" />
-
+  <meta property="og:url" content="https://glintvex.com/" />
+  <meta name="theme-color" content="#071514" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-
-  <!-- Satoshi (brand typeface): loaded non-render-blocking with system fallback -->
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" />
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" /></noscript>
-
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" media="print" onload="this.media='all'" />
 </head>
 <body>
-  <!-- Ambient cursor glow (brand oceanic gradient) -->
-  <div class="cursor-glow" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
 
-  <!-- ============ HEADER ============ -->
-  <header class="site-header" id="top">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="Glintvex home">
-        <img src="assets/logo-lockup.svg" alt="Glintvex" class="brand-lockup" />
-        <img src="assets/logo-mark.svg" alt="Glintvex" class="brand-mark" />
+  <!-- ============================== NAV -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a href="#top" class="logo" aria-label="Glintvex home">
+        <img src="assets/logo-lockup.svg" alt="Glintvex" width="132" height="28" />
       </a>
-
-      <nav class="nav" aria-label="Primary">
-        <a href="#capabilities"><span class="nav-idx">01</span> Capabilities</a>
-        <a href="#work"><span class="nav-idx">02</span> Work</a>
-        <a href="#team"><span class="nav-idx">03</span> Team</a>
-        <a href="#pricing"><span class="nav-idx">04</span> Pricing</a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#engage">Engagement</a>
+        <a href="#team">Team</a>
+        <a href="#faq">FAQ</a>
       </nav>
-
-      <div class="header-actions">
-        <a href="#contact" class="btn btn-primary">Get in touch</a>
-        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span><span></span>
-        </button>
+      <div class="nav__cta">
+        <button class="btn btn--ghost btn--sm hide-sm" data-open="estimator">Estimate project</button>
+        <button class="btn btn--sm" data-book>Book a discovery call</button>
+        <button class="nav__burger" aria-label="Open menu" aria-expanded="false" data-menu><span></span><span></span></button>
       </div>
     </div>
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-      <a href="#capabilities"><span class="nav-idx">01</span> Capabilities</a>
-      <a href="#work"><span class="nav-idx">02</span> Work</a>
-      <a href="#team"><span class="nav-idx">03</span> Team</a>
-      <a href="#pricing"><span class="nav-idx">04</span> Pricing</a>
-      <a href="#contact" class="btn btn-primary">Get in touch</a>
-    </nav>
+    <div class="nav__mobile" id="mobileMenu" hidden>
+      <a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a>
+      <a href="#engage">Engagement</a><a href="#team">Team</a><a href="#faq">FAQ</a>
+      <button class="btn" data-book>Book a discovery call</button>
+    </div>
   </header>
 
-  <main>
-    <!-- ============ HERO ============ -->
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <p class="eyebrow"><span class="status-dot"></span> London</p>
-          <h1 class="hero-title">
-            The technology partner that helps you <span class="grad-text">scale</span>.
-          </h1>
-          <p class="hero-sub">
-            Glintvex is the long-term engineering partner for SaaS and FinTech teams. We design,
-            build and scale production-grade systems alongside you, from cloud architecture and
-            payment rails to the dashboards your customers live in.
-          </p>
-          <div class="hero-cta">
-            <a href="#contact" class="btn btn-primary btn-lg">Get in touch</a>
-            <a href="#work" class="btn btn-ghost btn-lg">See our work →</a>
+  <main id="main">
+    <!-- ============================== HERO -->
+    <section class="hero" id="top">
+      <div class="hero__bg" aria-hidden="true"><span class="orb orb--a"></span><span class="orb orb--b"></span><div class="grid-lines"></div></div>
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="pill" data-fade><span class="pulse"></span> SaaS &amp; FinTech engineering partner · London</p>
+          <h1 class="hero__title" data-split>The engineering team behind platforms that <span class="grad">can't afford to fail.</span></h1>
+          <p class="hero__sub" data-fade>Glintvex designs, builds and scales the systems your revenue runs on: payments, ledgers, dashboards, APIs and cloud. Senior engineers only, with a kickoff in 14 days.</p>
+          <div class="hero__ctas" data-fade>
+            <button class="btn btn--lg" data-book>Book a free discovery call <span class="arr">→</span></button>
+            <button class="btn btn--ghost btn--lg" data-open="estimator">Estimate your project in 60s</button>
+          </div>
+          <ul class="hero__trust" data-fade>
+            <li><b>8+</b> platforms in production</li>
+            <li><b>5.0★</b> client rating on Upwork</li>
+            <li><b>AU · UK · UAE · US</b> clients</li>
+          </ul>
+        </div>
+
+        <!-- Live "system" panel: shows the kind of system we build -->
+        <div class="console" data-console aria-label="Illustrative production dashboard">
+          <div class="console__bar"><i></i><i></i><i></i><span>prod · payments-api</span><em class="live">LIVE</em></div>
+          <div class="console__body">
+            <div class="kpis">
+              <div class="kpi"><span>p95 latency</span><b data-tick="142" data-suffix="ms">142ms</b><small class="up">SLO &lt; 200ms</small></div>
+              <div class="kpi"><span>Payment success</span><b data-tick="99.2" data-dec="1" data-suffix="%">99.2%</b><small class="up">Webhooks retried</small></div>
+              <div class="kpi"><span>Uptime · 90d</span><b data-tick="99.98" data-dec="2" data-suffix="%">99.98%</b><small>SLO 99.9%</small></div>
+            </div>
+            <div class="chart">
+              <div class="chart__head"><span>Requests / min</span><span class="mono">auto-scaling · 3 → 9 nodes</span></div>
+              <svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="fillG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3E88FF" stop-opacity=".35"/><stop offset="1" stop-color="#3E88FF" stop-opacity="0"/></linearGradient>
+                </defs>
+                <path class="chart__fill" d="M0,96 C30,92 45,80 70,82 C95,84 110,64 140,60 C170,56 185,70 210,58 C235,46 255,30 280,34 C305,38 320,22 345,18 C370,14 385,20 400,12 L400,120 L0,120 Z" fill="url(#fillG)"/>
+                <path class="chart__line" d="M0,96 C30,92 45,80 70,82 C95,84 110,64 140,60 C170,56 185,70 210,58 C235,46 255,30 280,34 C305,38 320,22 345,18 C370,14 385,20 400,12" fill="none" stroke="#3E88FF" stroke-width="2.2"/>
+              </svg>
+            </div>
+            <ul class="log mono">
+              <li><i class="ok"></i>deploy #482 → production <span>12s</span></li>
+              <li><i class="ok"></i>stripe.webhook payment_intent.succeeded <span>retry 0</span></li>
+              <li><i class="ok"></i>ledger reconciled · 0 discrepancies <span>02:00</span></li>
+            </ul>
           </div>
         </div>
-
-        <!-- Interactive tech-stack orbital (nodes built by js/main.js) -->
-        <div class="hero-panel reveal" data-delay="120">
-          <div class="panel-glow" aria-hidden="true"></div>
-          <div class="orbital" id="orbital" role="img" aria-label="The technologies Glintvex builds with, orbiting the Glintvex core"></div>
-        </div>
       </div>
 
-      <!-- roaming tech / language stack -->
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-          <span>React</span><span>Next.js</span><span>Node.js</span><span>TypeScript</span><span>Python</span><span>Go</span><span>PostgreSQL</span><span>AWS</span><span>Docker</span><span>Kubernetes</span><span>Stripe</span><span>GraphQL</span><span>Flutter</span><span>Redis</span><span>Terraform</span>
-          <span>React</span><span>Next.js</span><span>Node.js</span><span>TypeScript</span><span>Python</span><span>Go</span><span>PostgreSQL</span><span>AWS</span><span>Docker</span><span>Kubernetes</span><span>Stripe</span><span>GraphQL</span><span>Flutter</span><span>Redis</span><span>Terraform</span>
+      <!-- Client strip -->
+      <div class="clients" aria-label="Platforms we have engineered">
+        <p class="clients__label">Platforms we've engineered for teams in Australia, the UK, the UAE and the US</p>
+        <div class="marquee"><div class="marquee__track">
+          <span>OnlyPark</span><span>The Pip Collective</span><span>Dawlati</span><span>AskInProperties</span><span>Scopeology</span><span>Core for Contractors</span><span>Autoversal</span><span>Onepay</span>
+          <span aria-hidden="true">OnlyPark</span><span aria-hidden="true">The Pip Collective</span><span aria-hidden="true">Dawlati</span><span aria-hidden="true">AskInProperties</span><span aria-hidden="true">Scopeology</span><span aria-hidden="true">Core for Contractors</span><span aria-hidden="true">Autoversal</span><span aria-hidden="true">Onepay</span>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ============================== OUTCOMES -->
+    <section class="section outcomes">
+      <div class="wrap">
+        <div class="stats">
+          <div class="stat" data-fade><b><span data-count="80">0</span>%</b><p>Faster page loads after rebuilding OnlyPark's operations dashboard</p></div>
+          <div class="stat" data-fade><b><span data-count="99">0</span>%</b><p>Payment success restored on a live trading-education platform</p></div>
+          <div class="stat" data-fade><b><span data-count="100">0</span>k+</b><p>Job listings &amp; applications served by Dawlati's backend</p></div>
+          <div class="stat" data-fade><b><span data-count="14">0</span> days</b><p>From signed proposal to first sprint, not months</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ============ CAPABILITIES ============ -->
-    <section class="section" id="capabilities">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-title">What we engineer</h2>
-          <p class="section-lede">
-            Four disciplines, one team. We take products from a whiteboard sketch to a system
-            that holds up under real traffic, real money and real compliance.
-          </p>
-        </div>
-
-        <div class="cap-grid">
-          <article class="cap-card reveal">
-            <div class="cap-num">01</div>
-            <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/><path d="M13.5 4 10.5 20"/></svg></div>
-            <h3>Custom Software</h3>
-            <p>Bespoke web and mobile products engineered around your domain, not bent to fit an off-the-shelf template.</p>
+    <!-- ============================== SERVICES -->
+    <section class="section" id="services">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow" data-fade>What we engineer</p>
+          <h2 class="h2" data-split>Four disciplines. One senior team that owns the outcome.</h2>
+        </header>
+        <div class="services">
+          <article class="svc" data-fade>
+            <span class="svc__n">01</span>
+            <h3>SaaS platforms</h3>
+            <p>Multi-tenant web apps, admin dashboards and customer portals, from MVP to the version that serves your 100,000th user.</p>
+            <ul><li>Next.js / React frontends</li><li>NestJS, Node &amp; Spring Boot APIs</li><li>Role-based access &amp; multi-tenancy</li></ul>
           </article>
-          <article class="cap-card reveal" data-delay="80">
-            <div class="cap-num">02</div>
-            <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h6v6"/></svg></div>
-            <h3>FinTech Solutions</h3>
-            <p>Payments, ledgers, KYC and reconciliation. Financial systems built for correctness, auditability and trust.</p>
+          <article class="svc" data-fade>
+            <span class="svc__n">02</span>
+            <h3>FinTech &amp; payments</h3>
+            <p>Payment rails, wallets, ledgers and reconciliation, engineered for correctness, auditability and money that never goes missing.</p>
+            <ul><li>Stripe, PayPal &amp; wallet integrations</li><li>Idempotent webhooks &amp; retries</li><li>PCI-DSS &amp; SOC 2 readiness</li></ul>
           </article>
-          <article class="cap-card reveal" data-delay="160">
-            <div class="cap-num">03</div>
-            <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-7.97 5.5 5.5 0 0 1 10.6-1.04A3.75 3.75 0 0 1 17 18Z"/></svg></div>
-            <h3>Cloud Architecture</h3>
-            <p>Infrastructure that scales horizontally and fails gracefully, with observability, CI/CD and cost discipline baked in.</p>
+          <article class="svc" data-fade>
+            <span class="svc__n">03</span>
+            <h3>Cloud &amp; DevOps</h3>
+            <p>Infrastructure that scales horizontally and fails gracefully, with CI/CD, observability and cost discipline built in.</p>
+            <ul><li>AWS (EC2, RDS, ECS) &amp; Docker</li><li>CI/CD, staging &amp; one-click rollback</li><li>Monitoring, alerting &amp; DR</li></ul>
           </article>
-          <article class="cap-card reveal" data-delay="240">
-            <div class="cap-num">04</div>
-            <div class="cap-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-            <h3>Scalable Products</h3>
-            <p>From MVP to millions of requests. We architect for the growth curve you're aiming at, not the one you have today.</p>
+          <article class="svc" data-fade>
+            <span class="svc__n">04</span>
+            <h3>Platform rescue &amp; modernization</h3>
+            <p>Slow, fragile or abandoned codebases stabilized first, then rebuilt where it matters, without downtime for your customers.</p>
+            <ul><li>Performance &amp; security audits</li><li>Legacy → modern stack migrations</li><li>Takeovers from previous vendors</li></ul>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ============ WORK ============ -->
-    <section class="section" id="work">
-      <div class="container">
-        <div class="section-head reveal work-head">
-          <div class="work-head-main">
-            <h2 class="section-title">Selected work</h2>
-            <p class="section-lede">Recent systems we've shipped, end to end.</p>
-            <ul class="work-stats">
-              <li><strong data-count="40" data-suffix="+">0</strong><span>Systems shipped</span></li>
-              <li><strong data-count="99.9" data-suffix="%" data-decimals="1">0</strong><span>Uptime target</span></li>
-              <li><strong data-count="8" data-suffix="+">0</strong><span>Years avg. experience</span></li>
-              <li><strong data-count="3" data-prefix="&lt;">0</strong><span>Weeks to first release</span></li>
-            </ul>
+    <!-- ============================== WORK (pinned horizontal gallery on desktop) -->
+    <section class="work" id="work">
+      <div class="work__pin">
+        <div class="wrap work__head">
+          <div>
+            <p class="eyebrow">Selected work</p>
+            <h2 class="h2">Systems we've shipped, end to end.</h2>
           </div>
-          <a href="#contact" class="btn btn-primary work-head-cta">Get in touch</a>
+          <p class="work__hint mono">Scroll →</p>
         </div>
-
-        <div class="work-rail">
-        <button type="button" class="work-arrow" id="work-arrow" aria-label="Scroll work sideways">
-          <span aria-hidden="true">→</span>
-        </button>
-        <div class="work-grid">
-          <article class="work-card reveal">
-            <div class="work-thumb">
-              <img src="assets/work/onlypark.png" alt="OnlyPark parking management platform" loading="lazy" />
-            </div>
-            <div class="work-top">
-              <span class="work-code">PARK-01</span>
-              <span class="work-state">Parking SaaS</span>
-            </div>
-            <h3>OnlyPark — parking management platform</h3>
-            <p>Admin dashboard and user portal for digital permits, QR visitor systems, and parking-enforcement workflows across commercial and residential properties in Australia.</p>
-            <ul class="work-stack"><li>React</li><li>Next.js</li><li>Web API</li><li>API Integration</li></ul>
-          </article>
-          <article class="work-card reveal" data-delay="80">
-            <div class="work-thumb">
-              <img src="assets/work/pip-collective.png" alt="The Pip Collective automated trading platform" loading="lazy" />
-            </div>
-            <div class="work-top">
-              <span class="work-code">PIP-02</span>
-              <span class="work-state">Trading platform</span>
-            </div>
-            <h3>The Pip Collective — automated trading platform</h3>
-            <p>Conversion-ready web app for an automated-trading product: subscription and pricing tiers, onboarding, EA access, and licensed membership management.</p>
-            <ul class="work-stack"><li>React</li><li>Next.js</li><li>API Integration</li><li>UX / UI</li></ul>
-          </article>
-          <article class="work-card reveal" data-delay="160">
-            <div class="work-thumb">
-              <img src="assets/work/property.png" alt="AskInProperties real-estate portal" loading="lazy" />
-            </div>
-            <div class="work-top">
-              <span class="work-code">PROP-03</span>
-              <span class="work-state">Real estate</span>
-            </div>
-            <h3>AskInProperties — real-estate portal</h3>
-            <p>Full real-estate listing platform with dynamic property listings, search and filters, project galleries, and secure lead-capture inquiry forms.</p>
-            <ul class="work-stack"><li>React</li><li>Next.js</li><li>Web API</li><li>Web App</li></ul>
-          </article>
-          <article class="work-card reveal" data-delay="240">
-            <div class="work-thumb">
-              <img src="assets/work/jobportal.png" alt="Dawlati bilingual job portal" loading="lazy" />
-            </div>
-            <div class="work-top">
-              <span class="work-code">JOB-04</span>
-              <span class="work-state">Job portal</span>
-            </div>
-            <h3>Dawlati — bilingual job portal</h3>
-            <p>UAE recruitment platform with job matching, employer and candidate flows, real-time alerts, and full English/Arabic support with RTL localization.</p>
-            <ul class="work-stack"><li>React</li><li>Next.js</li><li>API Integration</li><li>UX / UI</li></ul>
-          </article>
-          <article class="work-card reveal" data-delay="320">
-            <div class="work-thumb">
-              <img src="assets/work/salon.png" alt="Premium salon website" loading="lazy" />
-            </div>
-            <div class="work-top">
-              <span class="work-code">SALON-05</span>
-              <span class="work-state">Web design</span>
-            </div>
-            <h3>Premium salon website</h3>
-            <p>Elegant, fully responsive site for a luxury beauty salon — service pages, treatment galleries, and a smooth online appointment-booking flow.</p>
-            <ul class="work-stack"><li>Web Design</li><li>Responsive</li><li>Web Dev</li></ul>
-          </article>
-        </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ TEAM ============ -->
-    <section class="section" id="team">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="section-title">Engineers, not account managers</h2>
-          <p class="section-lede">You talk to the people building your system. Backgrounds in quantitative systems, full-stack engineering and financial infrastructure.</p>
-        </div>
-
-        <div class="team-grid">
-          <article class="team-card reveal">
-            <div class="team-portrait"><img src="assets/team/saim.jpg" alt="Saim Saudagar" loading="lazy" width="600" height="600" /></div>
-            <div class="team-body">
-              <h3>Saim Saudagar</h3>
-              <p class="team-role">Co-Founder &amp; Principal Engineer · Systems &amp; Architecture</p>
-              <p>Designs the backbone: data models, service boundaries and the failure modes nobody else thought about.</p>
+        <div class="work__track">
+          <article class="case">
+            <div class="case__img"><img src="assets/work/onlypark-dashboard.png" alt="OnlyPark operations dashboard" loading="lazy" /></div>
+            <div class="case__body">
+              <p class="case__tag mono">PropTech · Australia</p>
+              <h3>OnlyPark</h3>
+              <p>Rebuilt a buckling Laravel admin into a Next.js + NestJS platform on AWS for permits, enforcement and car-park operations.</p>
+              <div class="case__metric"><b>80%</b><span>faster page loads · contract extended</span></div>
             </div>
           </article>
-          <article class="team-card reveal" data-delay="100">
-            <div class="team-portrait"><img src="assets/team/usman.jpg" alt="Usman Ghani Bawany" loading="lazy" width="600" height="600" /></div>
-            <div class="team-body">
-              <h3>Usman Ghani Bawany</h3>
-              <p class="team-role">Co-Founder &amp; FinTech Lead · Payments &amp; Product</p>
-              <p>Lives in the financial domain: payments, ledgers and the regulatory edges that turn a demo into a real product.</p>
+          <article class="case">
+            <div class="case__img"><img src="assets/work/pip-landing.png" alt="The Pip Collective platform" loading="lazy" /></div>
+            <div class="case__body">
+              <p class="case__tag mono">FinTech · Trading education</p>
+              <h3>The Pip Collective</h3>
+              <p>Stabilized auth and rebuilt Stripe payment flows on a live, paying platform after the previous team walked away.</p>
+              <div class="case__metric"><b>99%</b><span>payment success rate restored</span></div>
             </div>
           </article>
-          <article class="team-card reveal" data-delay="200">
-            <div class="team-portrait"><img src="assets/team/asad.jpg" alt="Asad Ahmed" loading="lazy" width="600" height="600" /></div>
-            <div class="team-body">
-              <h3>Asad Ahmed</h3>
-              <p class="team-role">Co-Founder &amp; Cloud Lead · Infrastructure &amp; Scale</p>
-              <p>Owns the runway to scale: cloud architecture, observability and the automation that keeps releases boring.</p>
+          <article class="case">
+            <div class="case__img case__img--tall"><img src="assets/work/jobportal.png" alt="Dawlati job portal" loading="lazy" /></div>
+            <div class="case__body">
+              <p class="case__tag mono">Job platform · UAE</p>
+              <h3>Dawlati</h3>
+              <p>Bilingual English/Arabic job portal with a NestJS backend for matching, applications and employer profiles.</p>
+              <div class="case__metric"><b>100k+</b><span>listings &amp; applications supported</span></div>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case__img case__img--tall"><img src="assets/work/property.png" alt="AskInProperties real-estate portal" loading="lazy" /></div>
+            <div class="case__body">
+              <p class="case__tag mono">Real estate · Dubai</p>
+              <h3>AskInProperties</h3>
+              <p>Real-estate portal with property search, filters, project galleries and lead-capture workflows, built in Next.js.</p>
+              <div class="case__metric"><b>Next.js</b><span>SEO-ready, lead-generating portal</span></div>
+            </div>
+          </article>
+          <article class="case case--cta">
+            <div>
+              <p class="eyebrow">Your platform next?</p>
+              <h3>Tell us what's slow, broken or not built yet.</h3>
+              <p>A 30-minute call with a co-founder, not a salesperson. You leave with a clear plan, whether or not you hire us.</p>
+              <button class="btn" data-book>Book a discovery call <span class="arr">→</span></button>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ============ PRICING / PACKAGES ============ -->
-    <section class="section pricing" id="pricing">
-      <div aria-hidden="true" class="drift drift-a"></div>
-      <div aria-hidden="true" class="drift drift-b"></div>
-      <div class="container">
-        <div class="section-head section-head--center reveal">
-          <h2 class="section-title">Choose your <span class="grad-accent">Velocity</span></h2>
-          <p class="section-lede">All packages follow the same delivery methodology. The difference is scope, complexity and support.</p>
+    <!-- ============================== TESTIMONIALS -->
+    <section class="section" id="clients">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow" data-fade>Client words</p>
+          <h2 class="h2" data-split>Long-term partners, not one-off vendors.</h2>
+        </header>
+        <div class="quotes">
+          <figure class="quote quote--lg" data-fade>
+            <blockquote>“This is the second time I have hired Saim, and like last time he over-delivered and built an amazing CRM for my business! I've hired Saim on retainer for tech support for my CRM.”</blockquote>
+            <figcaption><b>Founder</b><span>Core CRM · Phase 2</span></figcaption>
+          </figure>
+          <figure class="quote" data-fade>
+            <blockquote>“I had a great experience working with Saim and his team on the CORE CRM MVP. They delivered exactly what they promised and, more importantly, they delivered it on time.”</blockquote>
+            <figcaption><b>Founder</b><span>Concrete estimator + CRM MVP</span></figcaption>
+          </figure>
+          <figure class="quote" data-fade>
+            <blockquote>“He demonstrated exceptional professionalism, strong communication skills, and a commitment to delivering high-quality work.”</blockquote>
+            <figcaption><b>Founder</b><span>SaaS platform · Spring Boot + React</span></figcaption>
+          </figure>
+          <figure class="quote" data-fade>
+            <blockquote>“Thank you for everything you're doing. We greatly appreciate it and very much enjoy working with you.”</blockquote>
+            <figcaption><b>Business owner</b><span>OnlyPark · Australia</span></figcaption>
+          </figure>
         </div>
+      </div>
+    </section>
 
-        <div class="price-grid">
-          <article class="price-card reveal">
-            <div class="price-head">
-              <h3>Velocity Starter</h3>
-              <p class="price-meta">6–10 weeks · Stages 1–2</p>
-            </div>
-            <p class="price-desc">For early Series A companies needing specific technical upgrades or MVP enhancements.</p>
-            <ul class="price-features">
-              <li>Backend API with authentication (REST/GraphQL)</li>
-              <li>Database design &amp; optimization</li>
-              <li>One major integration (Stripe, CRM, or Analytics)</li>
-              <li>AWS / Firebase cloud deployment</li>
-              <li>Security implementation (OWASP Top 10)</li>
-              <li>30 days post-launch support</li>
-            </ul>
-            <p class="price-ideal"><span>Ideal for</span> SaaS or FinTech with a validated product needing specific backend improvements.</p>
-            <a href="#contact" class="btn btn-ghost btn-lg price-cta">Get in touch</a>
+    <!-- ============================== LEAD MAGNETS -->
+    <section class="section tools" id="tools">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow" data-fade>Free tools</p>
+          <h2 class="h2" data-split>Get answers before you get on a call.</h2>
+        </header>
+        <div class="tools__grid">
+          <button class="tool" data-open="estimator" data-fade>
+            <span class="tool__tag mono">60 seconds · 5 questions</span>
+            <span class="tool__title">Project Cost Estimator</span>
+            <span class="tool__text">Pick what you're building, the platforms and integrations. Get a realistic budget range and timeline, based on real Glintvex projects.</span>
+            <span class="tool__go">Estimate my project <span class="arr">→</span></span>
+          </button>
+          <button class="tool" data-open="scorecard" data-fade>
+            <span class="tool__tag mono">90 seconds · 9 questions</span>
+            <span class="tool__title">Scale-Readiness Scorecard</span>
+            <span class="tool__text">Already live? Score your platform across Security, Performance and Scalability, and see the three risks most likely to break first.</span>
+            <span class="tool__go">Score my platform <span class="arr">→</span></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PROCESS -->
+    <section class="section process" id="process">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow" data-fade>How we work</p>
+          <h2 class="h2" data-split>A delivery process built to remove risk, not add meetings.</h2>
+        </header>
+        <ol class="steps">
+          <li class="step" data-fade><span class="step__n">01</span><h3>Discovery call</h3><p>30 minutes with a co-founder. We map your goals, constraints and the riskiest unknowns.</p><small class="mono">Day 0 · free</small></li>
+          <li class="step" data-fade><span class="step__n">02</span><h3>Architecture sprint</h3><p>We audit what exists, design the system and agree a fixed scope, timeline and price, in writing.</p><small class="mono">Week 1–2</small></li>
+          <li class="step" data-fade><span class="step__n">03</span><h3>Build in sprints</h3><p>Weekly demos on staging. You see working software every week and never chase us for status.</p><small class="mono">Week 3+</small></li>
+          <li class="step" data-fade><span class="step__n">04</span><h3>Launch &amp; scale</h3><p>Zero-downtime release, monitoring and runbooks, then ongoing support as you grow.</p><small class="mono">Launch → ongoing</small></li>
+        </ol>
+        <div class="steps__line" aria-hidden="true"><i></i></div>
+        <div class="promise" data-fade>
+          <div><b>Kickoff in 14 days</b><span>Senior engineers start within two weeks of agreement.</span></div>
+          <div><b>Fixed price, agreed upfront</b><span>Scope and cost locked after the architecture sprint.</span></div>
+          <div><b>You own everything</b><span>Code, infrastructure and docs are yours from day one.</span></div>
+          <div><b>Weekly working demos</b><span>Progress you can click, every single week.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== ENGAGEMENT MODELS -->
+    <section class="section" id="engage">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow" data-fade>Ways to work with us</p>
+          <h2 class="h2" data-split>Start small, prove it, then scale the team.</h2>
+        </header>
+        <div class="models">
+          <article class="model" data-fade>
+            <p class="model__tag mono">Start here</p>
+            <h3>Discovery &amp; Architecture Sprint</h3>
+            <p class="model__when">1–2 weeks · fixed fee</p>
+            <p>Technical audit, system design and a fixed-scope delivery plan. Valuable on its own, even if you build elsewhere.</p>
+            <ul><li>Codebase &amp; infrastructure audit</li><li>Architecture &amp; data model</li><li>Fixed-price build proposal</li></ul>
+            <button class="btn btn--ghost" data-book>Start with discovery</button>
           </article>
-
-          <article class="price-card price-card--popular reveal" data-delay="100">
-            <span class="price-badge">Most popular</span>
-            <div class="price-head">
-              <h3>Velocity Growth</h3>
-              <p class="price-meta">10–16 weeks · Stages 1–3</p>
-            </div>
-            <p class="price-desc">For Series A–B companies scaling infrastructure for 10x user growth.</p>
-            <ul class="price-features">
-              <li>Full-stack web application (Next.js + backend)</li>
-              <li>Cross-platform mobile app (Flutter, iOS + Android)</li>
-              <li>Advanced backend (microservices, caching, real-time)</li>
-              <li>Multiple integrations (Payments + CRM + Analytics)</li>
-              <li>Performance optimization (&lt;200ms APIs)</li>
-              <li>Security audit &amp; compliance prep (SOC2, PCI-DSS)</li>
-              <li>Auto-scaling cloud infrastructure</li>
-              <li>90 days premium support</li>
-            </ul>
-            <p class="price-ideal"><span>Ideal for</span> growing FinTech / SaaS hitting performance bottlenecks.</p>
-            <a href="#contact" class="btn btn-primary btn-lg price-cta">Get in touch</a>
+          <article class="model model--hot" data-fade>
+            <p class="model__tag mono">Most chosen</p>
+            <h3>Fixed-Scope Build</h3>
+            <p class="model__when">6–16 weeks · fixed price</p>
+            <p>We design, build and launch a defined product or platform upgrade, with weekly demos and a guaranteed scope.</p>
+            <ul><li>Web, mobile &amp; admin dashboards</li><li>Payments, auth &amp; integrations</li><li>Launch, monitoring &amp; 90-day support</li></ul>
+            <button class="btn" data-book>Plan my build</button>
           </article>
-
-          <article class="price-card reveal" data-delay="200">
-            <div class="price-head">
-              <h3>Velocity Enterprise</h3>
-              <p class="price-meta">16–24 weeks · Stage 3 + advisory</p>
-            </div>
-            <p class="price-desc">For Series B companies requiring enterprise-grade systems and ongoing partnership.</p>
-            <ul class="price-features">
-              <li>Multi-platform ecosystem (Web + iOS + Android + Admin)</li>
-              <li>Enterprise backend (distributed systems, message queues)</li>
-              <li>Advanced payments (multi-currency, escrow, crypto)</li>
-              <li>Real-time infrastructure (WebSockets, live tracking)</li>
-              <li>Blockchain / Web3 integrations</li>
-              <li>Complete DevOps &amp; CI/CD automation</li>
-              <li>Penetration testing &amp; compliance certification</li>
-              <li>Technical roadmap &amp; quarterly consulting</li>
-              <li>6 months dedicated support</li>
-            </ul>
-            <p class="price-ideal"><span>Ideal for</span> Series B companies with complex multi-platform needs.</p>
-            <a href="#contact" class="btn btn-ghost btn-lg price-cta">Get in touch</a>
+          <article class="model" data-fade>
+            <p class="model__tag mono">Scale</p>
+            <h3>Dedicated Engineering Team</h3>
+            <p class="model__when">Monthly · ongoing</p>
+            <p>A senior squad embedded in your roadmap: an extension of your team for continuous delivery and support.</p>
+            <ul><li>Full-stack, cloud &amp; QA engineers</li><li>Your tools, rituals &amp; repos</li><li>Scale up or down monthly</li></ul>
+            <button class="btn btn--ghost" data-book>Discuss a team</button>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ============ CONTACT / CTA ============ -->
-    <section class="section cta-section" id="contact">
-      <div class="container">
-        <div class="cta-head reveal">
-          <h2 class="cta-title">Have a system worth building right?</h2>
+    <!-- ============================== TEAM -->
+    <section class="section team" id="team">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow" data-fade>Leadership</p>
+          <h2 class="h2" data-split>Engineers, not account managers.</h2>
+          <p class="head__sub" data-fade>You talk to the people who design and build your system, with backgrounds in enterprise engineering, financial infrastructure and cloud at scale.</p>
+        </header>
+        <div class="people">
+          <article class="person" data-fade>
+            <img src="assets/team/saim.jpg" alt="Saim Saudagar" loading="lazy" width="600" height="600" />
+            <h3>Saim Saudagar</h3><p class="role">Co-Founder &amp; Principal Engineer</p>
+            <p>Systems &amp; architecture. Designs the data models, service boundaries and the failure modes nobody else thought about.</p>
+          </article>
+          <article class="person" data-fade>
+            <img src="assets/team/usman.jpg" alt="Usman Ghani Bawany" loading="lazy" width="600" height="600" />
+            <h3>Usman Ghani Bawany</h3><p class="role">Co-Founder &amp; FinTech Lead</p>
+            <p>Payments &amp; product. Lives in ledgers, payment rails and the regulatory edges that turn a demo into a real product.</p>
+          </article>
+          <article class="person" data-fade>
+            <img src="assets/team/asad.jpg" alt="Asad Ahmed" loading="lazy" width="600" height="600" />
+            <h3>Asad Ahmed</h3><p class="role">Co-Founder &amp; Cloud Lead</p>
+            <p>Infrastructure &amp; scale. Owns cloud architecture, observability and the automation that keeps releases boring.</p>
+          </article>
         </div>
+      </div>
+    </section>
 
-        <div class="funnel reveal">
-          <div class="funnel-card">
-            <h3>Get in touch</h3>
-            <p class="funnel-lede">Tell us a little about what you're building. We'll reply within one business day, or email us at <a href="mailto:info@glintvex.com">info@glintvex.com</a>.</p>
+    <!-- ============================== FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap faq">
+        <header class="head head--side">
+          <p class="eyebrow" data-fade>FAQ</p>
+          <h2 class="h2" data-split>Questions we hear on every first call.</h2>
+          <p class="head__sub" data-fade>Something else? <a href="mailto:info@glintvex.com">info@glintvex.com</a></p>
+        </header>
+        <div class="faq__list">
+          <details open><summary>How much does a project cost?</summary><div><p>It depends on scope, platforms and integrations. You'll get an exact, fixed price after the architecture sprint, before any build work starts. For a ballpark now, use the <button class="link" data-open="estimator">60-second cost estimator</button>.</p></div></details>
+          <details><summary>How fast can you start?</summary><div><p>Typically within 14 days of agreeing scope. The discovery call can happen this week.</p></div></details>
+          <details><summary>Can you take over a codebase from another team?</summary><div><p>Yes, it's one of our specialities. We audit first, stabilize what's risky (auth, payments, performance), then improve or rebuild only where it pays off.</p></div></details>
+          <details><summary>Who owns the code and IP?</summary><div><p>You do, from day one. Repositories, infrastructure and documentation live in your accounts.</p></div></details>
+          <details><summary>Do you work with our in-house team?</summary><div><p>Often. We can lead delivery end to end or work inside your rituals, repos and tools as an extension of your team.</p></div></details>
+          <details><summary>Which time zones do you cover?</summary><div><p>We work with clients in Australia, the UK, the UAE and the US, with overlapping hours for calls and async updates in between.</p></div></details>
+        </div>
+      </div>
+    </section>
 
-            <form class="cta-form" id="contact-form" novalidate>
-              <div class="cta-row">
-                <div class="cta-field">
-                  <label for="contact-name">Name</label>
-                  <input id="contact-name" type="text" name="name" placeholder="Your name" autocomplete="name" required />
-                </div>
-                <div class="cta-field">
-                  <label for="contact-email">Email</label>
-                  <input id="contact-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required />
-                </div>
-              </div>
-              <div class="cta-field">
-                <label for="contact-message">Message</label>
-                <textarea id="contact-message" name="message" rows="5" placeholder="What can we help you build?" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Send message</button>
-            </form>
-            <span class="cta-hint" id="contact-hint" role="status" aria-live="polite"></span>
+    <!-- ============================== FINAL CTA + CONTACT -->
+    <section class="section final" id="contact">
+      <div class="final__bg" aria-hidden="true"></div>
+      <div class="wrap final__grid">
+        <div class="final__copy">
+          <p class="eyebrow" data-fade>Let's talk</p>
+          <h2 class="h2 h2--xl" data-split>Have a system worth building right?</h2>
+          <p class="final__sub" data-fade>Book a free 30-minute discovery call with a co-founder. You'll leave with a clear technical plan, whether or not we work together.</p>
+          <div class="final__ctas" data-fade>
+            <button class="btn btn--lg" data-book>Book a discovery call <span class="arr">→</span></button>
           </div>
+          <ul class="final__points" data-fade>
+            <li>Reply within one business day</li><li>NDA on request</li><li>No sales pitch, just engineering</li>
+          </ul>
         </div>
+        <form class="contact" id="contactForm" novalidate data-fade>
+          <h3>Prefer to write? Send us a brief.</h3>
+          <div class="field2">
+            <label>Name<input name="name" autocomplete="name" required /></label>
+            <label>Work email<input name="email" type="email" autocomplete="email" required /></label>
+          </div>
+          <label>Company / product<input name="company" autocomplete="organization" /></label>
+          <div class="field2">
+            <label>Budget
+              <select name="budget">
+                <option value="">Select a range</option><option>Under $10k</option><option>$10k – $25k</option><option>$25k – $50k</option><option>$50k – $100k</option><option>$100k+</option><option>Not sure yet</option>
+              </select>
+            </label>
+            <label>Timeline
+              <select name="timeline">
+                <option value="">Select</option><option>ASAP</option><option>Within 1 month</option><option>1–3 months</option><option>Just exploring</option>
+              </select>
+            </label>
+          </div>
+          <label>What are you building?<textarea name="message" rows="4" required placeholder="A few lines about the product, the problem and where you are today."></textarea></label>
+          <button class="btn btn--block" type="submit">Send brief <span class="arr">→</span></button>
+          <p class="form__hint" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
   </main>
 
-  <!-- ============ FOOTER (TERMINAL NODE) ============ -->
-  <footer class="site-footer">
-    <div class="container footer-top">
-      <div class="footer-brand">
-        <img src="assets/logo-mark.svg" alt="Glintvex" class="footer-mark" />
-        <p>Glintvex // We build SaaS &amp; FinTech systems that scale.<br />Built in 2026.</p>
+  <!-- ============================== FOOTER -->
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div>
+        <img src="assets/logo-lockup.svg" alt="Glintvex" width="132" height="28" />
+        <p>SaaS &amp; FinTech engineering partner.<br />London · working with teams worldwide.</p>
+        <a class="footer__mail" href="mailto:info@glintvex.com">info@glintvex.com</a>
       </div>
-      <div class="footer-mid">
-        <nav class="footer-links" aria-label="Footer">
-          <a href="#capabilities">Capabilities</a>
-          <a href="#work">Work</a>
-          <a href="#team">Team</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <div class="footer-health" aria-label="System status">
-          <span class="health-dot"></span>
-          <span>Network: <strong>Operational</strong></span>
-          <span class="sep">//</span>
-          <span>Ping: <strong id="ping">14ms</strong></span>
-          <span class="sep">//</span>
-          <span>Local: <strong id="clock">--:--</strong></span>
-        </div>
-      </div>
-      <form class="footer-subscribe" id="subscribe-form" novalidate>
-        <label for="sub-email">Subscribe for engineering notes</label>
-        <div class="term-line">
-          <span class="term-prompt">~/glintvex $</span>
-          <input id="sub-email" type="email" name="email" placeholder="enter email" aria-label="Subscribe email" required />
-          <button type="submit" aria-label="Subscribe">↵</button>
-        </div>
-        <span class="sub-hint" id="sub-hint" role="status" aria-live="polite"></span>
-      </form>
+      <nav aria-label="Footer">
+        <p class="mono">Company</p><a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#team">Team</a>
+      </nav>
+      <nav aria-label="Free tools">
+        <p class="mono">Free tools</p><button class="link" data-open="estimator">Cost estimator</button><button class="link" data-open="scorecard">Scale scorecard</button><button class="link" data-book>Discovery call</button>
+      </nav>
     </div>
-    <div class="container footer-bottom">
-      <span>© 2026 Glintvex. All rights reserved.</span>
-      <span>Designed &amp; engineered in-house.</span>
-    </div>
+    <div class="wrap footer__base"><span>© <span data-year>2026</span> Glintvex. All rights reserved.</span><span>Designed &amp; engineered in-house.</span></div>
   </footer>
 
-  <script src="js/main.js?v=contact-mail3" defer></script>
+  <!-- Mobile sticky CTA -->
+  <div class="sticky"><button class="btn btn--ghost" data-open="estimator">Estimate</button><button class="btn" data-book>Book a call</button></div>
+
+  <!-- Modal shell (filled by js/tools.js) -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Glintvex tool" data-lenis-prevent>
+      <button class="modal__close" data-close aria-label="Close">✕</button>
+      <div class="modal__body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
+  <script src="assets/vendor/lenis.min.js" defer></script>
+  <script src="js/tools.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
