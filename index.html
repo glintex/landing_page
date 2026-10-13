@@ -13,11 +13,12 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=4" />
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" media="print" onload="this.media='all'" />
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
   <div class="progress" aria-hidden="true"></div>
 
   <!-- ============================== NAV -->
@@ -36,7 +37,7 @@
       </nav>
       <div class="nav__cta">
         <button class="btn btn--ghost btn--sm hide-sm" data-open="estimator">Estimate project</button>
-        <button class="btn btn--sm" data-book>Book a discovery call</button>
+        <button class="btn btn--sm" data-book data-magnetic>Book a discovery call</button>
         <button class="nav__burger" aria-label="Open menu" aria-expanded="false" data-menu><span></span><span></span></button>
       </div>
     </div>
@@ -50,15 +51,19 @@
   <main id="main">
     <!-- ============================== HERO -->
     <section class="hero" id="top">
-      <div class="hero__bg" aria-hidden="true"><span class="orb orb--a"></span><span class="orb orb--b"></span><div class="grid-lines"></div></div>
+      <div class="hero__bg" aria-hidden="true">
+        <div class="aurora"><i class="aurora__a"></i><i class="aurora__b"></i><i class="aurora__c"></i></div>
+        <div class="grid-lines"></div>
+        <div class="grain"></div>
+      </div>
       <div class="wrap hero__grid">
         <div class="hero__copy">
           <p class="pill" data-fade><span class="pulse"></span> SaaS &amp; FinTech engineering partner · London</p>
           <h1 class="hero__title" data-split>The engineering team behind platforms that <span class="grad">can't afford to fail.</span></h1>
           <p class="hero__sub" data-fade>Glintvex designs, builds and scales the systems your revenue runs on: payments, ledgers, dashboards, APIs and cloud. Senior engineers only, with a kickoff in 14 days.</p>
           <div class="hero__ctas" data-fade>
-            <button class="btn btn--lg" data-book>Book a free discovery call <span class="arr">→</span></button>
-            <button class="btn btn--ghost btn--lg" data-open="estimator">Estimate your project in 60s</button>
+            <button class="btn btn--lg" data-book data-magnetic>Book a free discovery call <span class="arr">→</span></button>
+            <button class="btn btn--ghost btn--lg" data-open="estimator" data-magnetic>Estimate your project in 60s</button>
           </div>
           <ul class="hero__trust" data-fade>
             <li><b>8+</b> platforms in production</li>
@@ -67,41 +72,55 @@
           </ul>
         </div>
 
-        <!-- Live "system" panel: shows the kind of system we build -->
-        <div class="console" data-console aria-label="Illustrative production dashboard">
-          <div class="console__bar"><i></i><i></i><i></i><span>prod · payments-api</span><em class="live">LIVE</em></div>
-          <div class="console__body">
-            <div class="kpis">
-              <div class="kpi"><span>p95 latency</span><b data-tick="142" data-suffix="ms">142ms</b><small class="up">SLO &lt; 200ms</small></div>
-              <div class="kpi"><span>Payment success</span><b data-tick="99.2" data-dec="1" data-suffix="%">99.2%</b><small class="up">Webhooks retried</small></div>
-              <div class="kpi"><span>Uptime · 90d</span><b data-tick="99.98" data-dec="2" data-suffix="%">99.98%</b><small>SLO 99.9%</small></div>
-            </div>
-            <div class="chart">
-              <div class="chart__head"><span>Requests / min</span><span class="mono">auto-scaling · 3 → 9 nodes</span></div>
-              <svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="fillG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3E88FF" stop-opacity=".35"/><stop offset="1" stop-color="#3E88FF" stop-opacity="0"/></linearGradient>
-                </defs>
-                <path class="chart__fill" d="M0,96 C30,92 45,80 70,82 C95,84 110,64 140,60 C170,56 185,70 210,58 C235,46 255,30 280,34 C305,38 320,22 345,18 C370,14 385,20 400,12 L400,120 L0,120 Z" fill="url(#fillG)"/>
-                <path class="chart__line" d="M0,96 C30,92 45,80 70,82 C95,84 110,64 140,60 C170,56 185,70 210,58 C235,46 255,30 280,34 C305,38 320,22 345,18 C370,14 385,20 400,12" fill="none" stroke="#3E88FF" stroke-width="2.2"/>
-              </svg>
-            </div>
-            <ul class="log mono">
-              <li><i class="ok"></i>deploy #482 → production <span>12s</span></li>
-              <li><i class="ok"></i>stripe.webhook payment_intent.succeeded <span>retry 0</span></li>
-              <li><i class="ok"></i>ledger reconciled · 0 discrepancies <span>02:00</span></li>
-            </ul>
+        <!-- 3D stack of real shipped products -->
+        <div class="stack" aria-label="Platforms engineered by Glintvex">
+          <div class="stack__scene">
+            <figure class="shot shot--3" data-depth="0.3">
+              <div class="shot__bar"><i></i><i></i><i></i><span>dawlati.ae</span></div>
+              <img src="assets/hero/dawlati.webp" alt="Dawlati job platform" width="1200" height="749" />
+            </figure>
+            <figure class="shot shot--2" data-depth="0.6">
+              <div class="shot__bar"><i></i><i></i><i></i><span>thepipcollective.com</span></div>
+              <img src="assets/hero/pip.webp" alt="The Pip Collective trading platform" width="1200" height="739" />
+            </figure>
+            <figure class="shot shot--1" data-depth="1">
+              <div class="shot__bar"><i></i><i></i><i></i><span>app.onlypark · operations</span></div>
+              <img src="assets/hero/onlypark.webp" alt="OnlyPark operations dashboard" width="1200" height="611" />
+            </figure>
+            <div class="chip chip--a" data-depth="1.4"><b>80%</b><span>faster loads<br />OnlyPark · AU</span></div>
+            <div class="chip chip--b" data-depth="1.2"><b>99%</b><span>payment success<br />The Pip Collective</span></div>
+            <div class="chip chip--c" data-depth="1.6"><b>100k+</b><span>listings served<br />Dawlati · UAE</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Client strip -->
-      <div class="clients" aria-label="Platforms we have engineered">
-        <p class="clients__label">Platforms we've engineered for teams in Australia, the UK, the UAE and the US</p>
-        <div class="marquee"><div class="marquee__track">
-          <span>OnlyPark</span><span>The Pip Collective</span><span>Dawlati</span><span>AskInProperties</span><span>Scopeology</span><span>Core for Contractors</span><span>Autoversal</span><span>Onepay</span>
-          <span aria-hidden="true">OnlyPark</span><span aria-hidden="true">The Pip Collective</span><span aria-hidden="true">Dawlati</span><span aria-hidden="true">AskInProperties</span><span aria-hidden="true">Scopeology</span><span aria-hidden="true">Core for Contractors</span><span aria-hidden="true">Autoversal</span><span aria-hidden="true">Onepay</span>
-        </div></div>
+      <!-- Client logos -->
+      <div class="clients" aria-label="Clients">
+        <p class="clients__label">Trusted by product teams in Australia, the UK, the UAE and the US</p>
+        <div class="marquee"><ul class="marquee__track logos">
+          <li class="logo-chip"><span class="logo-chip__mark lm-1">P</span>OnlyPark</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-2">◆</span>The Pip Collective</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-3">د</span>Dawlati</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-4">A</span>AskInProperties</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-5">S</span>Scopeology</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-1">C</span>Core for Contractors</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-2">A</span>Autoversal</li>
+          <li class="logo-chip"><span class="logo-chip__mark lm-3">1</span>Onepay</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <!-- ============================== SHOWREEL -->
+    <section class="reel" aria-label="Showreel">
+      <div class="wrap">
+        <div class="reel__frame" data-cursor="Play">
+          <div class="shot__bar"><i></i><i></i><i></i><span>Shipped by Glintvex · 2024–2026</span><em class="live">LIVE</em></div>
+          <video class="reel__video" src="assets/reel/showreel.mp4" poster="assets/reel/poster.jpg" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="reel__caption">
+          <p>Real platforms, in production, used every day by paying customers.</p>
+          <a href="#work" class="link-arrow">See the case studies <span>→</span></a>
+        </div>
       </div>
     </section>
 
@@ -164,7 +183,7 @@
           <p class="work__hint mono">Scroll →</p>
         </div>
         <div class="work__track">
-          <article class="case">
+          <article class="case" data-cursor="View">
             <div class="case__img"><img src="assets/work/onlypark-dashboard.png" alt="OnlyPark operations dashboard" loading="lazy" /></div>
             <div class="case__body">
               <p class="case__tag mono">PropTech · Australia</p>
@@ -173,7 +192,7 @@
               <div class="case__metric"><b>80%</b><span>faster page loads · contract extended</span></div>
             </div>
           </article>
-          <article class="case">
+          <article class="case" data-cursor="View">
             <div class="case__img"><img src="assets/work/pip-landing.png" alt="The Pip Collective platform" loading="lazy" /></div>
             <div class="case__body">
               <p class="case__tag mono">FinTech · Trading education</p>
@@ -182,7 +201,7 @@
               <div class="case__metric"><b>99%</b><span>payment success rate restored</span></div>
             </div>
           </article>
-          <article class="case">
+          <article class="case" data-cursor="View">
             <div class="case__img case__img--tall"><img src="assets/work/jobportal.png" alt="Dawlati job portal" loading="lazy" /></div>
             <div class="case__body">
               <p class="case__tag mono">Job platform · UAE</p>
@@ -191,7 +210,7 @@
               <div class="case__metric"><b>100k+</b><span>listings &amp; applications supported</span></div>
             </div>
           </article>
-          <article class="case">
+          <article class="case" data-cursor="View">
             <div class="case__img case__img--tall"><img src="assets/work/property.png" alt="AskInProperties real-estate portal" loading="lazy" /></div>
             <div class="case__body">
               <p class="case__tag mono">Real estate · Dubai</p>
@@ -324,6 +343,24 @@
     </section>
 
     <!-- ============================== TEAM -->
+    <!-- ============================== GLOBAL -->
+    <section class="section globe-sec" id="global">
+      <div class="wrap globe-sec__grid">
+        <div>
+          <p class="eyebrow" data-fade>Where we work</p>
+          <h2 class="h2" data-split>Headquartered in London. Shipping on four continents.</h2>
+          <p class="head__sub" data-fade>Distributed senior engineers who overlap with your working day, whether you're in Sydney, Dubai, London or New York.</p>
+          <ul class="places" data-fade>
+            <li><b>London</b><span>Headquarters</span></li>
+            <li><b>Australia</b><span>OnlyPark · Jamie K Fitness</span></li>
+            <li><b>UAE</b><span>Dawlati · AskInProperties</span></li>
+            <li><b>United States</b><span>SaaS &amp; FinTech teams</span></li>
+          </ul>
+        </div>
+        <div class="globe" aria-hidden="true"><canvas id="globe" width="1200" height="1200"></canvas></div>
+      </div>
+    </section>
+
     <section class="section team" id="team">
       <div class="wrap">
         <header class="head">
@@ -379,7 +416,7 @@
           <h2 class="h2 h2--xl" data-split>Have a system worth building right?</h2>
           <p class="final__sub" data-fade>Book a free 30-minute discovery call with a co-founder. You'll leave with a clear technical plan, whether or not we work together.</p>
           <div class="final__ctas" data-fade>
-            <button class="btn btn--lg" data-book>Book a discovery call <span class="arr">→</span></button>
+            <button class="btn btn--lg" data-book data-magnetic>Book a discovery call <span class="arr">→</span></button>
           </div>
           <ul class="final__points" data-fade>
             <li>Reply within one business day</li><li>NDA on request</li><li>No sales pitch, just engineering</li>
@@ -446,7 +483,8 @@
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="js/tools.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <script src="assets/vendor/land-dots.js" defer></script>
+  <script src="js/tools.js?v=4" defer></script>
+  <script src="js/main.js?v=4" defer></script>
 </body>
 </html>

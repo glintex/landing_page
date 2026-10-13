@@ -191,6 +191,143 @@
     });
   }
 
+  /* ------------------------------------------------------------ showreel playback */
+  var video = $(".reel__video");
+  if (video) {
+    if (reduce) {
+      video.controls = true;
+    } else if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) {
+          if (en.isIntersecting) { var pr = video.play(); if (pr && pr.catch) pr.catch(function () { video.controls = true; }); }
+          else video.pause();
+        });
+      }, { threshold: 0.25 }).observe(video);
+    }
+    $(".reel__frame").addEventListener("click", function () {
+      if (video.paused) video.play(); else video.pause();
+    });
+  }
+
+  /* ------------------------------------------------------------ globe (canvas 2D, dotted land) */
+  var globeCanvas = $("#globe");
+  if (globeCanvas && window.GV_LAND && "IntersectionObserver" in window) {
+    var G = globeCanvas.getContext("2d");
+    var RAD = Math.PI / 180;
+    var land = window.GV_LAND;
+    var pts = [];
+    for (var k = 0; k < land.length; k += 2) {
+      var la = land[k] * RAD, lo = -land[k + 1] * RAD;
+      pts.push([Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)]);
+    }
+    var toV = function (lat, lon) { var la = lat * RAD, lo = -lon * RAD; return [Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)]; };
+    var HQ = { n: "London", v: toV(51.5, -0.13) };
+    var places = [
+      { n: "Sydney", v: toV(-33.87, 151.21) },
+      { n: "Dubai", v: toV(25.2, 55.27) },
+      { n: "New York", v: toV(40.71, -74.0) },
+      { n: "San Francisco", v: toV(37.77, -122.42) },
+    ];
+    // great-circle arcs London -> each place, lifted off the surface
+    var arcs = places.map(function (p) {
+      var a = HQ.v, b = p.v, seg = [];
+      var dot = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+      var om = Math.acos(Math.max(-1, Math.min(1, dot)));
+      for (var i = 0; i <= 48; i++) {
+        var t = i / 48, s1 = Math.sin((1 - t) * om) / Math.sin(om), s2 = Math.sin(t * om) / Math.sin(om);
+        var lift = 1 + Math.sin(Math.PI * t) * Math.min(0.22, 0.12 * om);
+        seg.push([(a[0] * s1 + b[0] * s2) * lift, (a[1] * s1 + b[1] * s2) * lift, (a[2] * s1 + b[2] * s2) * lift]);
+      }
+      return seg;
+    });
+    var rotY = 0.9, tilt = 0.38, vel = 0, dragging = false, lastX = 0, running = false, visible = false, t0 = performance.now();
+    function proj(v, cx, cy, r) {
+      // rotate around Y, then tilt around X
+      var cy_ = Math.cos(rotY), sy = Math.sin(rotY);
+      var x = v[0] * cy_ - v[2] * sy, z = v[0] * sy + v[2] * cy_, y = v[1];
+      var ct = Math.cos(tilt), st = Math.sin(tilt);
+      var y2 = y * ct - z * st, z2 = y * st + z * ct;
+      return [cx + x * r, cy - y2 * r, z2];
+    }
+    function draw(now) {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = globeCanvas.clientWidth;
+      if (!w) return;
+      if (globeCanvas.width !== Math.round(w * dpr)) { globeCanvas.width = globeCanvas.height = Math.round(w * dpr); }
+      var S = globeCanvas.width, cx = S / 2, cy = S / 2, r = S * 0.4;
+      G.clearRect(0, 0, S, S);
+      // sphere body + rim light
+      var body = G.createRadialGradient(cx - r * 0.35, cy - r * 0.4, r * 0.1, cx, cy, r);
+      body.addColorStop(0, "rgba(22,60,62,0.95)");
+      body.addColorStop(1, "rgba(6,20,20,0.98)");
+      G.fillStyle = body;
+      G.beginPath(); G.arc(cx, cy, r, 0, Math.PI * 2); G.fill();
+      G.strokeStyle = "rgba(62,136,255,0.35)"; G.lineWidth = S * 0.0025; G.stroke();
+      // land dots
+      var ds = S * 0.0034;
+      for (var i = 0; i < pts.length; i++) {
+        var p = proj(pts[i], cx, cy, r);
+        if (p[2] < 0) continue;
+        var a = 0.18 + p[2] * 0.75;
+        G.fillStyle = "rgba(156,195,255," + a.toFixed(3) + ")";
+        G.fillRect(p[0] - ds / 2, p[1] - ds / 2, ds, ds);
+      }
+      // arcs with travelling pulse
+      var tt = ((now - t0) / 2600) % 1;
+      arcs.forEach(function (seg, j) {
+        G.lineWidth = S * 0.0028;
+        G.beginPath();
+        var started = false;
+        for (var i = 0; i < seg.length; i++) {
+          var p = proj(seg[i], cx, cy, r);
+          if (p[2] < -0.05) { started = false; continue; }
+          if (!started) { G.moveTo(p[0], p[1]); started = true; } else G.lineTo(p[0], p[1]);
+        }
+        G.strokeStyle = "rgba(62,136,255,0.55)";
+        G.stroke();
+        var ph = (tt + j * 0.23) % 1, idx = Math.floor(ph * (seg.length - 1));
+        var q = proj(seg[idx], cx, cy, r);
+        if (q[2] > -0.05) {
+          G.fillStyle = "#cfe2ff";
+          G.beginPath(); G.arc(q[0], q[1], S * 0.006, 0, Math.PI * 2); G.fill();
+        }
+      });
+      // markers
+      var pulse = (now % 2000) / 2000;
+      [HQ].concat(places).forEach(function (m, j) {
+        var p = proj(m.v, cx, cy, r);
+        if (p[2] < 0) return;
+        var big = j === 0;
+        G.fillStyle = "rgba(62,136,255," + (0.35 * (1 - pulse)).toFixed(3) + ")";
+        G.beginPath(); G.arc(p[0], p[1], S * (0.012 + pulse * 0.03), 0, Math.PI * 2); G.fill();
+        G.fillStyle = big ? "#ffffff" : "#3e88ff";
+        G.beginPath(); G.arc(p[0], p[1], S * (big ? 0.011 : 0.008), 0, Math.PI * 2); G.fill();
+        G.font = "600 " + Math.round(S * 0.022) + "px Satoshi, system-ui, sans-serif";
+        G.fillStyle = "rgba(255,255,255," + (0.4 + p[2] * 0.6).toFixed(2) + ")";
+        G.fillText(m.n + (big ? " · HQ" : ""), p[0] + S * 0.018, p[1] + S * 0.007);
+      });
+    }
+    function loop(now) {
+      if (!visible) { running = false; return; }
+      if (!dragging) { rotY += (reduce ? 0 : 0.0022) + vel; vel *= 0.94; }
+      draw(now);
+      requestAnimationFrame(loop);
+    }
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible && !running) { running = true; globeCanvas.classList.add("is-on"); requestAnimationFrame(loop); }
+    }, { rootMargin: "100px" }).observe(globeCanvas);
+    globeCanvas.addEventListener("pointerdown", function (e) { dragging = true; lastX = e.clientX; vel = 0; globeCanvas.setPointerCapture(e.pointerId); });
+    globeCanvas.addEventListener("pointermove", function (e) {
+      if (!dragging) return;
+      var d = (e.clientX - lastX) * 0.006;
+      rotY += d; vel = d * 0.5; lastX = e.clientX;
+    });
+    var endDrag = function () { dragging = false; };
+    globeCanvas.addEventListener("pointerup", endDrag);
+    globeCanvas.addEventListener("pointercancel", endDrag);
+  }
+
   /* ------------------------------------------------------------ static fallback */
   if (!hasGSAP || reduce) {
     $$("[data-count]").forEach(function (el) { el.textContent = el.dataset.count; });
@@ -239,33 +376,85 @@
       },
     });
 
-    /* Hero console */
-    var con = $(".console");
-    if (con) {
-      gsap.from(con, { y: 60, autoAlpha: 0, rotateX: 8, transformPerspective: 1200, duration: 1.4, ease: "power3.out", delay: 0.35 });
-      var line = $(".chart__line");
-      if (line && line.getTotalLength) {
-        var len = line.getTotalLength();
-        gsap.fromTo(line, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 2.2, ease: "power2.inOut", delay: 0.7 });
-        gsap.from(".chart__fill", { autoAlpha: 0, duration: 1.2, delay: 1.6 });
-      }
-      gsap.from(".log li", { x: -16, autoAlpha: 0, stagger: 0.12, duration: 0.6, delay: 1.2, ease: "power2.out" });
-      $$("[data-tick]").forEach(function (el, k) {
-        var to = parseFloat(el.dataset.tick);
-        var dec = parseInt(el.dataset.dec || "0", 10);
-        var suf = el.dataset.suffix || "";
-        gsap.delayedCall(0.6 + k * 0.15, function () { countUp(el, to, dec, suf, 1.6); });
-        // gentle "live" jitter afterwards
-        gsap.delayedCall(3 + k, function jitter() {
-          var spread = dec ? Math.pow(10, -dec) * 3 : Math.max(1, to * 0.05);
-          var v = dec ? to - Math.random() * spread : Math.max(0, to + (Math.random() - 0.5) * 2 * spread);
-          el.textContent = fmt(v, dec) + suf;
-          gsap.delayedCall(2 + Math.random() * 2, jitter);
+    /* Hero: real-product stack */
+    var scene = $(".stack__scene");
+    if (scene) {
+      var shots = $$(".shot");
+      var chips = $$(".chip");
+      var intro = gsap.timeline({ delay: 0.25 });
+      intro
+        .from(shots.slice().reverse(), { y: 160, autoAlpha: 0, rotateX: -18, duration: 1.4, ease: "power4.out", stagger: 0.14 })
+        .from(chips, { scale: 0.6, autoAlpha: 0, duration: 0.8, ease: "back.out(1.8)", stagger: 0.12 }, "-=0.7");
+
+      // mouse parallax (desktop pointers only)
+      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        var rx = gsap.quickTo(scene, "rotateY", { duration: 1.2, ease: "power3.out" });
+        var ry = gsap.quickTo(scene, "rotateX", { duration: 1.2, ease: "power3.out" });
+        gsap.set(scene, { rotateX: 14, rotateY: -18, rotateZ: 4 });
+        var layers = $$("[data-depth]", scene).map(function (el) {
+          return { d: parseFloat(el.dataset.depth), x: gsap.quickTo(el, "x", { duration: 1, ease: "power3.out" }) };
         });
+        $(".hero").addEventListener("pointermove", function (e) {
+          var nx = e.clientX / window.innerWidth - 0.5;
+          var ny = e.clientY / window.innerHeight - 0.5;
+          rx(-18 + nx * 10);
+          ry(14 - ny * 8);
+          layers.forEach(function (l) { l.x(nx * 26 * l.d); });
+        });
+      }
+
+      // scroll: the stack fans out and flattens as you leave the hero
+      var fan = gsap.timeline({ scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.8 } });
+      fan
+        .to(".shot--3", { yPercent: -28, ease: "none" }, 0)
+        .to(".shot--2", { yPercent: -10, ease: "none" }, 0)
+        .to(".shot--1", { yPercent: 14, ease: "none" }, 0)
+        .to(".chip--a", { yPercent: 120, ease: "none" }, 0)
+        .to(".chip--c", { yPercent: -160, ease: "none" }, 0);
+      gsap.to(".aurora", { yPercent: 25, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+    }
+
+    /* Showreel: scale up into place */
+    var reelFrame = $(".reel__frame");
+    if (reelFrame) {
+      gsap.fromTo(reelFrame, { scale: 0.86, borderRadius: 32 }, { scale: 1, borderRadius: 22, ease: "none", scrollTrigger: { trigger: ".reel", start: "top 95%", end: "top 20%", scrub: true } });
+    }
+
+    /* Custom cursor + magnetic buttons */
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      var cur = $(".cursor");
+      var label = $(".cursor__label");
+      if (cur) {
+        var cx = gsap.quickTo(cur, "x", { duration: 0.35, ease: "power3.out" });
+        var cy = gsap.quickTo(cur, "y", { duration: 0.35, ease: "power3.out" });
+        window.addEventListener("pointermove", function (e) {
+          cur.classList.add("is-on");
+          cx(e.clientX);
+          cy(e.clientY);
+          var t = e.target.closest ? e.target : null;
+          var lab = t && t.closest("[data-cursor]");
+          var hov = t && t.closest("a, button, summary, input, select, textarea, label");
+          if (lab && !hov) {
+            label.textContent = lab.getAttribute("data-cursor");
+            cur.classList.add("is-label");
+            cur.classList.remove("is-hover");
+          } else {
+            cur.classList.remove("is-label");
+            cur.classList.toggle("is-hover", !!hov);
+          }
+        }, { passive: true });
+        document.addEventListener("pointerleave", function () { cur.classList.remove("is-on"); });
+      }
+      $$("[data-magnetic]").forEach(function (btn) {
+        var mx = gsap.quickTo(btn, "x", { duration: 0.6, ease: "elastic.out(1, 0.45)" });
+        var my = gsap.quickTo(btn, "y", { duration: 0.6, ease: "elastic.out(1, 0.45)" });
+        btn.addEventListener("pointermove", function (e) {
+          var r = btn.getBoundingClientRect();
+          mx((e.clientX - r.left - r.width / 2) * 0.3);
+          my((e.clientY - r.top - r.height / 2) * 0.4);
+        });
+        btn.addEventListener("pointerleave", function () { mx(0); my(0); });
       });
-      // subtle parallax
-      gsap.to(con, { yPercent: -8, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
-      gsap.to(".orb--a", { yPercent: 40, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
     }
 
     /* Outcome counters */
@@ -316,6 +505,14 @@
       };
     });
 
-    window.addEventListener("load", function () { ST.refresh(); });
+    function toHash() {
+      if (location.hash.length < 2) return;
+      var t = document.querySelector(location.hash);
+      if (!t) return;
+      if (lenis) lenis.scrollTo(t, { offset: -72, immediate: true, force: true });
+      else t.scrollIntoView();
+    }
+    window.addEventListener("load", function () { ST.refresh(); setTimeout(toHash, 60); });
+    if (document.readyState === "complete") setTimeout(toHash, 60);
   });
 })();
