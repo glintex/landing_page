@@ -221,16 +221,10 @@
       pts.push([Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)]);
     }
     var toV = function (lat, lon) { var la = lat * RAD, lo = -lon * RAD; return [Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)]; };
-    var HQ = { n: "London", v: toV(51.5, -0.13) };
-    var places = [
-      { n: "Sydney", v: toV(-33.87, 151.21) },
-      { n: "Dubai", v: toV(25.2, 55.27) },
-      { n: "New York", v: toV(40.71, -74.0) },
-      { n: "San Francisco", v: toV(37.77, -122.42) },
-    ];
-    // great-circle arcs London -> each place, lifted off the surface
-    var arcs = places.map(function (p) {
-      var a = HQ.v, b = p.v, seg = [];
+    var places = [toV(-33.87, 151.21), toV(25.2, 55.27), toV(51.5, -0.13), toV(40.71, -74.0)];
+    // great-circle arcs linking client regions in a loop, lifted off the surface
+    var arcs = places.map(function (pv, idx) {
+      var a = pv, b = places[(idx + 1) % places.length], seg = [];
       var dot = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
       var om = Math.acos(Math.max(-1, Math.min(1, dot)));
       for (var i = 0; i <= 48; i++) {
@@ -294,17 +288,13 @@
       });
       // markers
       var pulse = (now % 2000) / 2000;
-      [HQ].concat(places).forEach(function (m, j) {
-        var p = proj(m.v, cx, cy, r);
+      places.forEach(function (v) {
+        var p = proj(v, cx, cy, r);
         if (p[2] < 0) return;
-        var big = j === 0;
         G.fillStyle = "rgba(62,136,255," + (0.35 * (1 - pulse)).toFixed(3) + ")";
         G.beginPath(); G.arc(p[0], p[1], S * (0.012 + pulse * 0.03), 0, Math.PI * 2); G.fill();
-        G.fillStyle = big ? "#ffffff" : "#3e88ff";
-        G.beginPath(); G.arc(p[0], p[1], S * (big ? 0.011 : 0.008), 0, Math.PI * 2); G.fill();
-        G.font = "600 " + Math.round(S * 0.022) + "px Satoshi, system-ui, sans-serif";
-        G.fillStyle = "rgba(255,255,255," + (0.4 + p[2] * 0.6).toFixed(2) + ")";
-        G.fillText(m.n + (big ? " · HQ" : ""), p[0] + S * 0.018, p[1] + S * 0.007);
+        G.fillStyle = "#cfe2ff";
+        G.beginPath(); G.arc(p[0], p[1], S * 0.009, 0, Math.PI * 2); G.fill();
       });
     }
     function loop(now) {

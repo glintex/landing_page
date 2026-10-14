@@ -1889,3 +1889,16 @@ button {
 .cursor.is-label .cursor__label { opacity: 1; }
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 [data-magnetic] { will-change: transform; }
+/* real client logos, shown monochrome */
+.logo { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 34px; opacity: .62; transition: opacity .3s; white-space: nowrap; }
+.logo:hover { opacity: 1; }
+.logo img { width: auto; filter: brightness(0) invert(1); }
+.logo--txt span { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+.logo--word { font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+.logo img { height: 34px; max-width: none; }
+.logo img[src*="onlypark"] { height: 30px; }
+.logo img[src*="dawlati"] { height: 40px; }
+.logo img[src*="scopeology"] { height: 32px; }
+.logo--txt span, .logo--word { font-size: 19px; }
+.logo img[src*="pip"] { height: 44px; }
+.logo { opacity: .75; }
