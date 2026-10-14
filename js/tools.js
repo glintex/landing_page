@@ -390,7 +390,7 @@
   ];
   var PILLARS = ["Security", "Performance", "Scalability"];
   function colorFor(v) {
-    return v >= 80 ? "#34d399" : v >= 55 ? "#fbbf24" : "#fb7c5a";
+    return v >= 80 ? "#16a34a" : v >= 55 ? "#d97706" : "#e8620c";
   }
   function verdict(s) {
     if (s >= 80) return ["Built to scale.", "Your foundations are solid. The gains now are in fine-tuning before the next growth step."];
@@ -505,7 +505,7 @@
       var C = 2 * Math.PI * 56;
       bodyEl.innerHTML =
         head("Scale-Readiness Scorecard", "Your results", 100) +
-        '<div class="gauge"><div class="gauge__num"><svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="56" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10"/>' +
+        '<div class="gauge"><div class="gauge__num"><svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="56" fill="none" stroke="rgba(15,18,24,.08)" stroke-width="10"/>' +
         '<circle class="gauge__arc" cx="65" cy="65" r="56" fill="none" stroke="' + colorFor(r.total) + '" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.1,1)"/></svg><b>' + r.total + "</b></div>" +
         "<div><h3>" + v[0] + "</h3><p>" + v[1] + "</p></div></div>" +
         '<div class="bars">' +

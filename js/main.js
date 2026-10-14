@@ -252,18 +252,18 @@
       G.clearRect(0, 0, S, S);
       // sphere body + rim light
       var body = G.createRadialGradient(cx - r * 0.35, cy - r * 0.4, r * 0.1, cx, cy, r);
-      body.addColorStop(0, "rgba(22,60,62,0.95)");
-      body.addColorStop(1, "rgba(6,20,20,0.98)");
+      body.addColorStop(0, "rgba(255,255,255,1)");
+      body.addColorStop(1, "rgba(220,226,234,1)");
       G.fillStyle = body;
       G.beginPath(); G.arc(cx, cy, r, 0, Math.PI * 2); G.fill();
-      G.strokeStyle = "rgba(62,136,255,0.35)"; G.lineWidth = S * 0.0025; G.stroke();
+      G.strokeStyle = "rgba(18,72,166,0.25)"; G.lineWidth = S * 0.0025; G.stroke();
       // land dots
       var ds = S * 0.0034;
       for (var i = 0; i < pts.length; i++) {
         var p = proj(pts[i], cx, cy, r);
         if (p[2] < 0) continue;
         var a = 0.18 + p[2] * 0.75;
-        G.fillStyle = "rgba(156,195,255," + a.toFixed(3) + ")";
+        G.fillStyle = "rgba(18,72,166," + (a * 0.85).toFixed(3) + ")";
         G.fillRect(p[0] - ds / 2, p[1] - ds / 2, ds, ds);
       }
       // arcs with travelling pulse
@@ -277,12 +277,12 @@
           if (p[2] < -0.05) { started = false; continue; }
           if (!started) { G.moveTo(p[0], p[1]); started = true; } else G.lineTo(p[0], p[1]);
         }
-        G.strokeStyle = "rgba(62,136,255,0.55)";
+        G.strokeStyle = "rgba(62,136,255,0.75)";
         G.stroke();
         var ph = (tt + j * 0.23) % 1, idx = Math.floor(ph * (seg.length - 1));
         var q = proj(seg[idx], cx, cy, r);
         if (q[2] > -0.05) {
-          G.fillStyle = "#cfe2ff";
+          G.fillStyle = "#1248a6";
           G.beginPath(); G.arc(q[0], q[1], S * 0.006, 0, Math.PI * 2); G.fill();
         }
       });
@@ -293,7 +293,7 @@
         if (p[2] < 0) return;
         G.fillStyle = "rgba(62,136,255," + (0.35 * (1 - pulse)).toFixed(3) + ")";
         G.beginPath(); G.arc(p[0], p[1], S * (0.012 + pulse * 0.03), 0, Math.PI * 2); G.fill();
-        G.fillStyle = "#cfe2ff";
+        G.fillStyle = "#1248a6";
         G.beginPath(); G.arc(p[0], p[1], S * 0.009, 0, Math.PI * 2); G.fill();
       });
     }
