@@ -59,3 +59,15 @@ double-booking is prevented server-side.
 
 `npm run screenshots` (with the server running) captures responsive screenshots
 and runs interactivity checks via headless Chrome into `/tmp/glintvex_shots`.
+
+## SEO & AEO
+
+- `index.html` `<head>`: title, description, canonical, robots, Open Graph and
+  Twitter cards (`assets/og-image.png`, 1200×630), apple-touch icon.
+- JSON-LD `@graph` in `<head>`: `ProfessionalService` (services, founders,
+  areas served), `Person` ×3, `WebSite`, `WebPage`, `VideoObject` (showreel)
+  and `FAQPage`. **The `FAQPage` entries must match the visible `#faq`
+  section word for word**; update both together.
+- `robots.txt` (AI answer engines explicitly allowed), `sitemap.xml`, and
+  `llms.txt` (plain-language summary for LLMs). Bump `<lastmod>` in
+  `sitemap.xml` and refresh `llms.txt` when page content changes.

@@ -1,0 +1,57 @@
+# Glintvex
+
+> Glintvex is a senior software engineering company for SaaS and FinTech businesses. It designs, builds and scales the platforms revenue runs on: payments, ledgers, dashboards, APIs and cloud. Senior engineers only, with a kickoff within 14 days of agreeing scope. Clients in Australia, the United Kingdom, the United Arab Emirates and the United States.
+
+Website: https://glintvex.com/
+Contact: info@glintvex.com (reply within one business day; NDA on request)
+
+## Services
+
+- **SaaS platforms**: multi-tenant web apps, admin dashboards and customer portals, from MVP to 100,000+ users. Next.js / React frontends; NestJS, Node and Spring Boot APIs; role-based access and multi-tenancy.
+- **FinTech and payments**: payment rails, wallets, ledgers and reconciliation, engineered for correctness and auditability. Stripe, PayPal and wallet integrations; idempotent webhooks and retries; PCI-DSS and SOC 2 readiness.
+- **Cloud and DevOps**: AWS (EC2, RDS, ECS) and Docker; CI/CD, staging and one-click rollback; monitoring, alerting and disaster recovery.
+- **Platform rescue and modernization**: performance and security audits, legacy to modern stack migrations, and takeovers from previous vendors, without customer downtime.
+
+## Engagement models
+
+- **Discovery and Architecture Sprint** (1 to 2 weeks, fixed fee): codebase and infrastructure audit, architecture and data model, fixed-price build proposal.
+- **Fixed-Scope Build** (6 to 16 weeks, fixed price): web, mobile and admin dashboards; payments, auth and integrations; launch, monitoring and 90-day support.
+- **Dedicated Engineering Team** (monthly, ongoing): full-stack, cloud and QA engineers working in the client's tools, rituals and repos; scale up or down monthly.
+
+## Process
+
+1. Discovery call: 30 minutes with a co-founder, free.
+2. Architecture sprint: audit, system design, fixed scope, timeline and price in writing (week 1 to 2).
+3. Build in sprints: weekly working demos on staging (week 3+).
+4. Launch and scale: zero-downtime release, monitoring, runbooks and ongoing support.
+
+Commitments: kickoff in 14 days; fixed price agreed upfront; the client owns all code, infrastructure and documentation from day one; weekly working demos.
+
+## Selected work
+
+- **OnlyPark** (PropTech, Australia): rebuilt a Laravel admin into a Next.js + NestJS platform on AWS for permits, enforcement and car-park operations. 80% faster page loads; contract extended.
+- **The Pip Collective** (FinTech, trading education): stabilized auth and rebuilt Stripe payment flows on a live, paying platform after the previous team left. 99% payment success rate restored.
+- **Dawlati** (job platform, UAE): bilingual English/Arabic job portal with a NestJS backend for matching, applications and employer profiles. 100k+ listings and applications supported.
+- **AskInProperties** (real estate, UAE): Next.js real-estate portal with property search, filters, project galleries and lead capture.
+
+Other clients include Scopeology, Autoversal and Core for Contractors. 5.0 star client rating on Upwork; 8+ platforms in production.
+
+## Leadership
+
+- **Saim Saudagar**, Co-Founder and Principal Engineer: systems and architecture.
+- **Usman Ghani Bawany**, Co-Founder and FinTech Lead: payments and product.
+- **Asad Ahmed**, Co-Founder and Cloud Lead: infrastructure and scale.
+
+## FAQ
+
+- **How much does a project cost?** It depends on scope, platforms and integrations. An exact fixed price is given after the architecture sprint, before build work starts. A free 60-second cost estimator is on https://glintvex.com/.
+- **How fast can Glintvex start?** Typically within 14 days of agreeing scope.
+- **Can Glintvex take over an existing codebase?** Yes. Audit first, stabilize auth, payments and performance, then improve or rebuild only where it pays off.
+- **Who owns the code and IP?** The client, from day one.
+- **Does Glintvex work with in-house teams?** Yes, either leading delivery end to end or embedded in the client's team.
+
+## Free tools
+
+- [Project Cost Estimator](https://glintvex.com/#tools): 5 questions, a budget range and timeline based on real Glintvex projects.
+- [Scale-Readiness Scorecard](https://glintvex.com/#tools): 9 questions scoring Security, Performance and Scalability.
+- [Book a discovery call](https://glintvex.com/#contact)

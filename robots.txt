@@ -1,0 +1,26 @@
+# Glintvex · https://glintvex.com
+# Search engines and AI answer engines are welcome to crawl and cite this site.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /data/
+Disallow: /*.pdf$
+Disallow: /*.jpeg$
+
+# AI search and answer engines (explicitly allowed)
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /data/
+
+Sitemap: https://glintvex.com/sitemap.xml
