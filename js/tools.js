@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var CONTACT_MAIL = "info@glintvex.com";
+  var CONTACT_MAIL = "gptsaim@gmail.com";
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   /* ------------------------------------------------------------ lead sender */
