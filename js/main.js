@@ -5,7 +5,7 @@
   "use strict";
 
   var CALENDLY_URL = "https://calendly.com/saudagarsaim/30min"; // swap for a company Calendly link when ready
-  var CONTACT_MAIL = "info@glintvex.com";
+  var CONTACT_MAIL = "gptsaim@gmail.com";
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasGSAP = typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
